@@ -13,4 +13,5 @@ public class CurriculumData {
     // TODO setter methods - Jomari
 
     // TODO toString method - Kurt
+
 }

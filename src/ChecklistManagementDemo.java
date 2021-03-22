@@ -32,4 +32,5 @@ public class ChecklistManagementDemo {
     // TODO displaySubjectsAccordingToGrades - Kurt
 
     // TODO displayHighestGPA method - Jerome
+
 }

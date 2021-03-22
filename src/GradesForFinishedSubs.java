@@ -1,5 +1,4 @@
 public class GradesForFinishedSubs extends SubjectsAndGrades {
-
     public GradesForFinishedSubs() {
         // TODO edit constructor - Adi
     }

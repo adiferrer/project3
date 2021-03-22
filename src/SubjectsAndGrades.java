@@ -17,7 +17,6 @@ public class SubjectsAndGrades extends CurriculumData {
 
     public double computeGPA() {
         // TODO edit method - Adi
-
         return 0.0;
     }
 }
