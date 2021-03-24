@@ -1,18 +1,30 @@
 class Course {
-    protected static final int DEFAULT_INT = 0;
+    protected static final byte DEFAULT_BYTE = 0;
     protected static final double DEFAULT_DOUBLE = 0.0;
     protected static final String DEFAULT_STRING = "";
     private String courseNumber, descriptiveTitle;
-    private int term, year;
+    private byte term, year; //
     private double units, grades;
 
+    /**
+     * Default Constructor
+     * Constructs a course with the empty string as the course number,
+     * empty string as the course title, 0 as the units,
+     * 0 as the year level, 0 as the term, 0 as the grade
+     */
     Course () {
         this(DEFAULT_STRING, DEFAULT_STRING,
-                DEFAULT_INT, DEFAULT_INT, DEFAULT_DOUBLE, DEFAULT_DOUBLE);
+                DEFAULT_BYTE, DEFAULT_BYTE, DEFAULT_DOUBLE, DEFAULT_DOUBLE);
     }
 
+    /** given string t as the course title,
+     * given u as the units,
+     * given y as the year level,
+     * given e the term,
+     * given g as the grade
+     */
     Course(String courseNumber, String descriptiveTitle,
-           int term, int year, double units, double grades) {
+           byte term, byte year, double units, double grades) {
         this.courseNumber = courseNumber;
         this.descriptiveTitle = descriptiveTitle;
         this.term = term;
@@ -29,11 +41,11 @@ class Course {
         this.descriptiveTitle = descriptiveTitle;
     }
 
-    public void setTerm(int term) {
+    public void setTerm(byte term) {
         this.term = term;
     }
 
-    public void setYear(int year) {
+    public void setYear(byte year) {
         this.year = year;
     }
 
@@ -69,4 +81,11 @@ class Course {
         return grades;
     }
 
+    public int compareTo(Course another){
+        if (this.toString().equals(another.toString()))
+            return 0; else
+        if (this.toString().compareTo(another.toString()) < 0) return -1;
+        else
+            return 1;
+    }
 }

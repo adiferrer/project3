@@ -9,19 +9,20 @@ public class CourseAdministration {
         List<Course> courseList = null;
         String line;
         try {
-            br = new BufferedReader(new FileReader("BSCSCurriculumData1.csv"));
+            br = new BufferedReader(new FileReader("BSCSCurriculumData1WithGrades.csv"));
             while ((line = br.readLine()) != null) {
                 // Split on comma
                 String[] courseCSV = line.split(",");
                 // Create course object to store values
                 Course courseTemp = new Course();
                 // add values from csv to Course object
-                courseTemp.setYear(Integer.parseInt(courseCSV[0]));
-                courseTemp.setTerm(Integer.parseInt(courseCSV[1]));
+                courseTemp.setYear(Byte.parseByte(courseCSV[0]));
+                courseTemp.setTerm(Byte.parseByte(courseCSV[1]));
                 courseTemp.setCourseNumber(courseCSV[2]);
                 courseTemp.setDescriptiveTitle(courseCSV[3]);
                 courseTemp.setUnits(Double.parseDouble(courseCSV[4]));
-
+                // TODO add a conditional statement for when the the grade cell is blank
+                courseTemp.setGrades(Double.parseDouble(courseCSV[5]));
                 courseList.add(courseTemp);
             }
         } catch (FileNotFoundException fileNotFoundException) {
@@ -55,7 +56,6 @@ public class CourseAdministration {
     private void showIntroduction() {
 
     }
-
 
     public static void main (String[] args) {
         List<Course> courseList = new ArrayList<>();
