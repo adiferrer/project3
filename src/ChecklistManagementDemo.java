@@ -11,6 +11,9 @@ public class ChecklistManagementDemo {
 
     // TODO populateCurriculumDataArray method - Enrico
 
+    /**
+     * Display the curriculum data on the screen and in an output file.
+     */
     public void printOutput(CurriculumData[] cData, String outputFileName) throws Exception {
         for (CurriculumData cD : cData) {
             System.out.println(cD);
