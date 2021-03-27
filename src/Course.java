@@ -6,7 +6,7 @@ class Course {
     private byte term, year; //
     private double units, grades;
 
-    /**
+    /*
      * Default Constructor
      * Constructs a course with the empty string as the course number,
      * empty string as the course title, 0 as the units,
@@ -17,7 +17,8 @@ class Course {
                 DEFAULT_BYTE, DEFAULT_BYTE, DEFAULT_DOUBLE, DEFAULT_DOUBLE);
     }
 
-    /** given string t as the course title,
+    /*
+     * given string t as the course title,
      * given u as the units,
      * given y as the year level,
      * given e the term,
@@ -65,11 +66,11 @@ class Course {
         return descriptiveTitle;
     }
 
-    public int getTerm() {
+    public byte getTerm() {
         return term;
     }
 
-    public int getYear() {
+    public byte getYear() {
         return year;
     }
 
@@ -83,8 +84,9 @@ class Course {
 
     public int compareTo(Course another){
         if (this.toString().equals(another.toString()))
-            return 0; else
-        if (this.toString().compareTo(another.toString()) < 0) return -1;
+            return 0; 
+        else if (this.toString().compareTo(another.toString()) < 0) 
+            return -1;
         else
             return 1;
     }
