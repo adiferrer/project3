@@ -1,5 +1,6 @@
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
@@ -9,13 +10,15 @@ public class CourseAdministration {
 
     // TODO EJ
     protected static List<Course> parseCSV () {
-        ArrayList<Course> courseList = new ArrayList<Course>();
+        ArrayList<Course> courseList = new ArrayList<>();
         String line;
         try {
             br = new BufferedReader(new FileReader("BSCSCurriculumData1WithGrades.csv"));
+            br.readLine();
             while ((line = br.readLine()) != null) {
                 // Split on comma
                 String[] courseCSV = line.split(",");
+                if (courseCSV.length < 6) courseCSV = buildArray(line.split(","));
                 // Create course object to store values
                 Course courseTemp = new Course();
                 // add values from csv to Course object
@@ -24,8 +27,8 @@ public class CourseAdministration {
                 courseTemp.setCourseNumber(courseCSV[2]);
                 courseTemp.setDescriptiveTitle(courseCSV[3]);
                 courseTemp.setUnits(Double.parseDouble(courseCSV[4]));
-                // TODO add a conditional statement for when the the grade cell is blank
-                courseTemp.setGrades(Double.parseDouble(courseCSV[5]));
+                if (courseCSV[5].equals("")) courseTemp.setGrades(0);
+                else courseTemp.setGrades(Double.parseDouble(courseCSV[5]));
                 courseList.add(courseTemp);
             }
         } catch (FileNotFoundException fileNotFoundException) {
@@ -34,6 +37,16 @@ public class CourseAdministration {
             System.out.println("I/O error: " + ioException);
         }
         return courseList;
+    }
+
+    private static String[] buildArray(String[] csvLine) {
+        ArrayList<String> courseInfo = new ArrayList<String>(Arrays.asList(csvLine));
+        int size = 6 - courseInfo.size();
+        for (int i = 0; i < size; i++) {
+            courseInfo.add("");
+        }
+        // System.out.println(courseInfo.toString());
+        return courseInfo.toArray(new String[6]);
     }
 
     // TODO EJ
@@ -129,7 +142,7 @@ public class CourseAdministration {
 
     // TODO Adi
     // Edit a course's descriptive title and course number
-    private static void editCourse(List<Course> courseList) {
+    private static void editCourse(ArrayList<Course> courseList) {
         
     }
 
@@ -196,7 +209,7 @@ public class CourseAdministration {
 
     // TODO Jerome
     public static void main (String[] args) {
-        List<Course> courseList = new ArrayList<>();
+        ArrayList<Course> courseList = new ArrayList<>();
         showIntroduction();
         showMenu();
         byte choice = 0;
@@ -210,6 +223,7 @@ public class CourseAdministration {
                 System.out.println("You entered an invalid integer. Please enter integer:");
             }
         } while (choice < 1 || choice > 5);
-        System.out.println(courseList);
+
+        parseCSV();
     }
 }
