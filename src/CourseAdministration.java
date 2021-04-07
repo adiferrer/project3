@@ -1,3 +1,5 @@
+import jdk.jfr.Description;
+
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -9,7 +11,7 @@ public class CourseAdministration {
     static Scanner keyboard = new Scanner(System.in);
 
     // TODO EJ
-    protected static List<Course> parseCSV () {
+    protected static ArrayList<Course> parseCSV () {
         ArrayList<Course> courseList = new ArrayList<>();
         String line;
         try {
@@ -69,17 +71,12 @@ public class CourseAdministration {
         return c;
     }
 
-    // TODO Adi
-    // Implement similar to the showCourses() method
-    // Print only to the console if the Course
-    // has a failing grade
-    // PRINT OUTPUTS ONLY, DO NOT MANIPULATE THE ARRAYLIST
-    private static void showFailedCourses(List<Course> courseList) {
+    private static void showFailedCourses(ArrayList<Course> courseList) {
         System.out.println("FAILED COURSES");
         System.out.printf("%-15s %-50s %-5s\n", "COURSE NO.", "COURSE DESCRIPTION", "GRADE");
         for (Course c: courseList) {
             if (hasFailedCourse(c))
-                System.out.printf("%-15s %-50s %-5d", c.getCourseNumber(), c.getDescriptiveTitle(), c.getGrades());
+                System.out.printf("%-15s %-50s %-5.2f\n", c.getCourseNumber(), c.getDescriptiveTitle(), c.getGrades());
         }
     }
 
@@ -103,7 +100,7 @@ public class CourseAdministration {
     private static boolean hasFailedCourse(Course course) {
         boolean failed = false;
         double grade = course.getGrades();
-        if (grade<75){
+        if (grade < 75 && grade != 0){
             failed = true;
         }
         return failed;
@@ -145,8 +142,6 @@ public class CourseAdministration {
             System.out.println(c.toString());
     }
 
-    // TODO Adi
-    // Edit a course's descriptive title and course number
     private static void editCourse(ArrayList<Course> courseList) {
         System.out.print("Enter course number to be changed (ex. CS122): ");
         String courseNumberToChange = keyboard.nextLine();
@@ -235,13 +230,14 @@ public class CourseAdministration {
             try {
                 System.out.print("Enter a number: ");
                 choice = Byte.parseByte(keyboard.nextLine());
-                if (choice < 1 || choice > 9)
+                if (choice < 1 || choice > 5)
                     System.out.println("The number must be from 1 to 5.");
             } catch (NumberFormatException x) {
-                System.out.println("You entered an invalid integer. Please enter integer:");
+                System.out.println("You entered an invalid integer.");
             }
-        } while (choice < 1 || choice > 5);
+        } while (choice != 5);
 
-        parseCSV();
+        courseList = parseCSV();
+        showFailedCourses(courseList);
     }
 }
