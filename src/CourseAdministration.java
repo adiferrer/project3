@@ -101,7 +101,12 @@ public class CourseAdministration {
     // has a failing grade
     // HINT: Check for the instance variable called "grades"
     private static boolean hasFailedCourse(Course course) {
-        return false;
+        boolean failed = false;
+        double grade = course.getGrades();
+        if (grade<75){
+            failed = true;
+        }
+        return failed;
     }
 
     // TODO Kurt
@@ -143,7 +148,20 @@ public class CourseAdministration {
     // TODO Adi
     // Edit a course's descriptive title and course number
     private static void editCourse(ArrayList<Course> courseList) {
-        
+        System.out.print("Enter course number to be changed (ex. CS122): ");
+        String courseNumberToChange = keyboard.nextLine();
+        for (int i = 0; i < courseList.size(); i++) {
+            String cN = courseList.get(i).getCourseNumber();
+            if (cN.compareToIgnoreCase(courseNumberToChange) == 0) {
+                System.out.print("Enter the new course number: ");
+                String newCN = keyboard.nextLine();
+                System.out.print("Enter the new descriptive title: ");
+                String newTitle = keyboard.nextLine();
+                courseList.get(i).setCourseNumber(newCN);
+                courseList.get(i).setDescriptiveTitle(newTitle);
+                break;
+            }
+        }
     }
 
     // TODO EJ
