@@ -5,6 +5,7 @@ class Course {
     private String courseNumber, descriptiveTitle;
     private byte term, year; //
     private double units, grades;
+    private boolean isElective;
 
     /*
      * Default Constructor
@@ -58,6 +59,10 @@ class Course {
         this.grades = grades;
     }
 
+    public void setIsElective(boolean isElective) {
+        this.isElective = isElective;
+    } 
+
     public String getCourseNumber() {
         return courseNumber;
     }
@@ -80,6 +85,16 @@ class Course {
 
     public double getGrades() {
         return grades;
+    }
+
+    public boolean getIsElective() {
+        return isElective;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("%-15s %-110s %-8.1f %-6.2f", getCourseNumber(),
+                            getDescriptiveTitle(), getUnits(), getGrades());
     }
 
     public int compareTo(Course another){

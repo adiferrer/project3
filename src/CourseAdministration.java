@@ -10,7 +10,6 @@ public class CourseAdministration {
     static BufferedReader br;
     static Scanner keyboard = new Scanner(System.in);
 
-    // TODO EJ
     protected static ArrayList<Course> parseCSV () {
         ArrayList<Course> courseList = new ArrayList<>();
         String line;
@@ -64,9 +63,18 @@ public class CourseAdministration {
     // NOTE: THIS METHOD DOES NOT DISPLAY THE COURSES
     // THIS METHOD JUST REARRANGES AN EXISTING COURSE LIST
     // KEEPING THE CONTENTS OF AN ARRAYLIST INTACT
-    private static List<Course> sortCoursesByGPA(int key) {
+    private static ArrayList<Course> sortCoursesByGPA(int key){
         ArrayList<Course> c = new ArrayList<Course>();
+
         switch(key) {
+          case 1:
+            // ascending arranged
+            // c.sort();
+            break;
+        case 2:
+            //descending arraged
+            // c.sort();
+            break;
         }
         return c;
     }
@@ -83,12 +91,14 @@ public class CourseAdministration {
     // TODO Andre
     // Read the project specification, specifically items
     // Two and Three
-    private static void shiftCourse(Course course) {
+    private static void shiftCourse(ArrayList<Course> course) {
+        // note: compareTo
+        // note: shift from another program?
         
     }
 
     // TODO Enrico
-    private static List<Course> inputGrades() {
+    private static ArrayList<Course> inputGrades() {
         ArrayList<Course> c = new ArrayList<Course>();
         return c;
     }
@@ -124,22 +134,47 @@ public class CourseAdministration {
              My Checklist Management
              <1> Show subjects for each school term
              <2> Show subjects with grades for each term
-             <3> Enter grades for subjects recently finished
-             <4> Edit a course
-             <5> Quit
+             <3> Show elective subjects only
+             <4> Show failed courses
+             <5> Enter grades for subjects recently finished
+             <6> Edit a course
+             <7> Shift from another program
+             <8> Quit
             -------------------------------------------------
             """);
-    }
+    } 
 
     // TODO Enrico
     // Prints a formatted result similar to what is
     // Displayed in the course specification
     // PRINT OUTPUTS ONLY, DO NOT MANIPULATE THE ARRAYLIST
-    private static void showCourses(List<Course> courseList) {
+    private static void showCourses(ArrayList<Course> courseList) {
         System.out.println("COURSES");
-        System.out.printf("%-15s %-50s %-5s\n", "COURSE NO.", "COURSE DESCRIPTION", "GRADE");
+        System.out.printf("%-15s %-110s %-8s %-6s\n", "COURSE NO.","COURSE DESCRIPTION", "UNITS", "GRADE");
         for (Course c:courseList)
             System.out.println(c.toString());
+    }
+
+    // TODO KURT
+    // Specifications similar to the showCourses() method,
+    // However this method prints only courses with a GPA
+    private static void showCoursesWithGrades(ArrayList<Course> courseList) {
+        System.out.println("COURSES WITH GRADES");
+
+    }
+
+    // TODO KURT
+    // Show only elective courses
+    private static void showElectiveCourses(ArrayList<Course> courseList) {
+
+    }
+
+    // TODO KURT
+    // Similar to editCourse
+    // Print courses that have no GPA yet
+    // Then allow user to select from that list
+    private static void inputGrades(ArrayList<Course> courseList) {
+
     }
 
     private static void editCourse(ArrayList<Course> courseList) {
@@ -149,9 +184,9 @@ public class CourseAdministration {
             String cN = courseList.get(i).getCourseNumber();
             if (cN.compareToIgnoreCase(courseNumberToChange) == 0) {
                 System.out.print("Enter the new course number: ");
-                String newCN = keyboard.nextLine();
+                String newCN = acceptStringInput();
                 System.out.print("Enter the new descriptive title: ");
-                String newTitle = keyboard.nextLine();
+                String newTitle = acceptStringInput();
                 courseList.get(i).setCourseNumber(newCN);
                 courseList.get(i).setDescriptiveTitle(newTitle);
                 break;
@@ -159,11 +194,6 @@ public class CourseAdministration {
         }
     }
 
-    // TODO EJ
-    // Method for accepting byte input
-    // Used for inputting Year and Term
-    // inputted by the user
-    // handle exceptions locally (do not use a throws clause!)
     private static byte acceptByteInput() {
         byte userInput = 0;
         try{
@@ -175,13 +205,6 @@ public class CourseAdministration {
         return userInput;
     }
 
-    // TODO Jerome
-    // Method for accepting integer input
-    // Used for inputting Grades
-    // for searching the ArrayList for grades
-    // inputted by the user
-    // and for navigating the menu
-    // handle exceptions locally (do not use a throws clause!)
     private static int acceptIntegerInput() {
         int input = 0;
         boolean t = false;
@@ -203,14 +226,11 @@ public class CourseAdministration {
     // and for searching the ArrayList for grades
     // inputted by the user
     // handle exceptions locally (do not use a throws clause!)
-    private static double acceptDoubleInput() {
+    private static double acceptDoubleInput(int n) {
+        
         return 0.0;
     }
 
-    // TODO Kurt
-    // Method for accepting String input
-    // Usually for editing a course's descriptive title
-    // Or if searching for a course
     private static String acceptStringInput() {
         String userInput = null;
         while(true) {
@@ -222,7 +242,7 @@ public class CourseAdministration {
 
     // TODO Jerome
     public static void main (String[] args) {
-        ArrayList<Course> courseList = new ArrayList<>();
+        ArrayList<Course> courseList = parseCSV();
         showIntroduction();
         showMenu();
         byte choice = 0;
@@ -230,14 +250,34 @@ public class CourseAdministration {
             try {
                 System.out.print("Enter a number: ");
                 choice = Byte.parseByte(keyboard.nextLine());
-                if (choice < 1 || choice > 5)
-                    System.out.println("The number must be from 1 to 5.");
+                if (choice < 1 || choice > 8)
+                    System.out.println("The number must be from 1 to 8.");
+                switch(choice){
+                    case 1:
+                    showCourses(courseList);
+                    break;
+                    case 2:
+                    showCoursesWithGrades(courseList);
+                    break;
+                    case 3:
+                    showElectiveCourses(courseList);
+                    break;
+                    case 4:
+                    showFailedCourses(courseList);
+                    break;
+                    case 5:
+                    inputGrades();
+                    break;
+                    case 6:
+                    editCourse(courseList);
+                    break;
+                    case 7:
+                    shiftCourse(courseList);
+                    break;
+                }
             } catch (NumberFormatException x) {
                 System.out.println("You entered an invalid integer.");
             }
-        } while (choice != 5);
-
-        courseList = parseCSV();
-        showFailedCourses(courseList);
+        } while (choice != 8);
     }
 }
