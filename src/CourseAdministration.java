@@ -103,10 +103,6 @@ public class CourseAdministration {
         return c;
     }
 
-    // TODO Jerome
-    // Check if the passed parameter
-    // has a failing grade
-    // HINT: Check for the instance variable called "grades"
     private static boolean hasFailedCourse(Course course) {
         boolean failed = false;
         double grade = course.getGrades();
@@ -116,17 +112,12 @@ public class CourseAdministration {
         return failed;
     }
 
-    // TODO Kurt
     private static void showIntroduction() {
         System.out.println("Welcome to the Course Administration program!");
         System.out.println("See menu below for available operations.");
         System.out.println();
     }
 
-    // TODO Andre
-    // The menu pertains to the "Checklist Management"
-    // Method showCourses() is responsible for displaying
-    // courses
     private static void showMenu() {
         // note: I saw text blocks in the previous program, and I want to try that
         System.out.println("""
@@ -155,7 +146,7 @@ public class CourseAdministration {
             System.out.println(c.toString());
     }
 
-    // TODO KURT
+    // TODO Adi
     // Specifications similar to the showCourses() method,
     // However this method prints only courses with a GPA
     private static void showCoursesWithGrades(ArrayList<Course> courseList) {
