@@ -119,9 +119,8 @@ public class CourseAdministration {
     }
 
     private static void showMenu() {
-        // note: I saw text blocks in the previous program, and I want to try that
         System.out.println("""
-            -------------------------------------------------
+            =================================================
              My Checklist Management
              <1> Show subjects for each school term
              <2> Show subjects with grades for each term
@@ -131,7 +130,7 @@ public class CourseAdministration {
              <6> Edit a course
              <7> Shift from another program
              <8> Quit
-            -------------------------------------------------
+            =================================================
             """);
     } 
 
@@ -140,8 +139,9 @@ public class CourseAdministration {
     // Displayed in the course specification
     // PRINT OUTPUTS ONLY, DO NOT MANIPULATE THE ARRAYLIST
     private static void showCourses(ArrayList<Course> courseList) {
-        System.out.println("COURSES");
-        System.out.printf("%-15s %-110s %-8s %-6s\n", "COURSE NO.","COURSE DESCRIPTION", "UNITS", "GRADE");
+        System.out.println("\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t      COURSES");
+        for (int i = 0; i < 145; i++) System.out.print("-");
+        System.out.printf("\n%-15s %-110s %-8s %-6s\n", "COURSE NO.","COURSE DESCRIPTION", "UNITS", "GRADE");
         for (Course c:courseList)
             System.out.println(c.toString());
     }
@@ -150,8 +150,13 @@ public class CourseAdministration {
     // Specifications similar to the showCourses() method,
     // However this method prints only courses with a GPA
     private static void showCoursesWithGrades(ArrayList<Course> courseList) {
-        System.out.println("COURSES WITH GRADES");
-
+        System.out.println("\t\t\t\t\t\t\t\t\t\t\t\t\t\t   COURSES WITH GRADES");
+        for (int i = 0; i < 145; i++) System.out.print("-");
+        System.out.printf("\n%-15s %-110s %-8s %-6s\n", "COURSE NO.","COURSE DESCRIPTION", "UNITS", "GRADE");
+        for (Course c:courseList) {
+            if (c.getGrades() > 0)
+                System.out.println(c.toString());
+        }
     }
 
     // TODO KURT
@@ -229,6 +234,13 @@ public class CourseAdministration {
             userInput = keyboard.nextLine();
             if (userInput != null) return userInput;
         }
+    }
+
+    private static void inputBuffer() {
+        System.out.println();
+        System.out.print("Press enter to continue");
+        keyboard.nextLine();
+        System.out.println();
     }
 
     // TODO Jerome

@@ -93,6 +93,9 @@ class Course {
 
     @Override
     public String toString() {
+        if (getGrades() == 0)
+            return String.format("%-15s %-110s %-8.1f %-6s", getCourseNumber(),
+                    getDescriptiveTitle(), getUnits(), "GRADE N/A");
         return String.format("%-15s %-110s %-8.1f %-6.2f", getCourseNumber(),
                             getDescriptiveTitle(), getUnits(), getGrades());
     }
