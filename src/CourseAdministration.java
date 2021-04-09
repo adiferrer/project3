@@ -1,5 +1,3 @@
-import jdk.jfr.Description;
-
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -41,7 +39,7 @@ public class CourseAdministration {
     }
 
     private static String[] buildArray(String[] csvLine) {
-        ArrayList<String> courseInfo = new ArrayList<String>(Arrays.asList(csvLine));
+        ArrayList<String> courseInfo = new ArrayList<>(Arrays.asList(csvLine));
         int size = 6 - courseInfo.size();
         for (int i = 0; i < size; i++) {
             courseInfo.add("");
@@ -59,14 +57,14 @@ public class CourseAdministration {
         ArrayList<Course> c = new ArrayList<Course>();
 
         switch(key) {
-          case 1:
-            // ascending arranged
-            // c.sort();
-            break;
-        case 2:
-            //descending arraged
-            // c.sort();
-            break;
+            case 1:
+                // ascending arranged
+                // c.sort();
+                break;
+            case 2:
+                //descending arraged
+                // c.sort();
+                break;
         }
         return c;
     }
@@ -88,11 +86,9 @@ public class CourseAdministration {
 
         int y = 1, t = 1;
         System.out.printf("\n%-15s %-110s %-8s %-6s\n", "COURSE NO.","COURSE DESCRIPTION", "UNITS", "GRADE");
-        for (Course c: courseList) {
+        for (Course c: courseList)
             if (hasFailedCourse(c))
                 System.out.println(c.toString());
-        }
-
         System.out.println(t);
     }
 
@@ -121,7 +117,7 @@ public class CourseAdministration {
     private static void shiftCourse(ArrayList<Course> course) {
         // note: compareTo
         // note: shift from another program?
-        
+
     }
 
     // TODO Enrico
@@ -131,12 +127,7 @@ public class CourseAdministration {
     }
 
     private static boolean hasFailedCourse(Course course) {
-        boolean failed = false;
-        double grade = course.getGrades();
-        if (grade < 75 && grade != 0){
-            failed = true;
-        }
-        return failed;
+        return course.getGrades() < 75 && course.getGrades() != 0;
     }
 
     private static void showIntroduction() {
@@ -159,7 +150,7 @@ public class CourseAdministration {
              <8> Quit
             =================================================
             """);
-    } 
+    }
 
 
 
@@ -178,8 +169,33 @@ public class CourseAdministration {
 
     // TODO KURT
     // Show only elective courses
+    // DONE, TEST CODE PLS
     private static void showElectiveCourses(ArrayList<Course> courseList) {
+        System.out.println("\t\t\t\t\t\t\t\t\t\t\t\t\t\t   ELECTIVE COURSES");
+        for (int i = 0; i < 145; i++) System.out.print("-");
+        System.out.printf("\n%-15s %-110s %-8s %-6s\n", "COURSE NO.","COURSE DESCRIPTION", "UNITS", "GRADE");
+        for (Course c : courseList)
+            if (c.getIsElective())
+                System.out.println(c.toString());
+    }
 
+    private static void showCoursesWithoutGPA(ArrayList<Course> courseList) {
+        System.out.println("\t\t\t\t\t\t\t\t\t\t\t\t\t\t   SHOWING COURSES WITHOUT GPA");
+        for (int i = 0; i < 145; i++) System.out.print("-");
+        System.out.printf("\n%-15s %-110s %-8s %-6s\n", "COURSE NO.","COURSE DESCRIPTION", "UNITS", "GRADE");
+        for (Course c : courseList)
+            if (c.getGrades() != 0.0)
+                System.out.println(c.toString());
+
+    }
+
+    private static Course searchCourseList(ArrayList<Course> courseList,
+                                           String searchKey) {
+        for (Course course : courseList) {
+            if (course.getCourseNumber().equalsIgnoreCase(searchKey))
+                return course;
+        }
+        return new Course();
     }
 
     // TODO KURT
@@ -187,7 +203,16 @@ public class CourseAdministration {
     // Print courses that have no GPA yet
     // Then allow user to select from that list
     private static void inputGrades(ArrayList<Course> courseList) {
-
+        Course selectedCourse;
+        String searchKey;
+        do {
+            showCoursesWithoutGPA(courseList);
+            searchKey = acceptStringInput("Enter a course number: ");
+            selectedCourse = searchCourseList(courseList, searchKey);
+            if (selectedCourse.getCourseNumber().equals(""))
+                System.out.println("Invalid Course Number inputted. Try again.");
+        } while (selectedCourse.getCourseNumber().equals(""));
+        selectedCourse.setGrades(acceptDoubleInput("Input GPA: "));
     }
 
     private static void editCourse(ArrayList<Course> courseList) {
@@ -196,10 +221,8 @@ public class CourseAdministration {
         for (int i = 0; i < courseList.size(); i++) {
             String cN = courseList.get(i).getCourseNumber();
             if (cN.compareToIgnoreCase(courseNumberToChange) == 0) {
-                System.out.print("Enter the new course number: ");
-                String newCN = acceptStringInput();
-                System.out.print("Enter the new descriptive title: ");
-                String newTitle = acceptStringInput();
+                String newCN = acceptStringInput("Enter the new course number: ");
+                String newTitle = acceptStringInput("Enter the new descriptive title: ");
                 courseList.get(i).setCourseNumber(newCN);
                 courseList.get(i).setDescriptiveTitle(newTitle);
                 break;
@@ -207,47 +230,54 @@ public class CourseAdministration {
         }
     }
 
-    private static byte acceptByteInput() {
-        byte userInput = 0;
-        try{
-            System.out.println("Input(Byte): ");
-            userInput = keyboard.nextByte();
-        } catch(NumberFormatException e) {
-            System.out.println("Out of bounds! " +e);
-        }
-        return userInput;
-    }
-
-    private static int acceptIntegerInput() {
-        int input = 0;
-        boolean t = false;
-        while (!t) {
+    private static byte acceptByteInput(String message) {
+        byte input = 0;
+        while (true) {
             try {
-                System.out.println("Enter an integer: ");
-                input = Integer.parseInt(keyboard.nextLine());
-                t = true;
+                input = Byte.parseByte(acceptStringInput(message));
             } catch (NumberFormatException exception) {
                 System.out.println("You entered an invalid integer.");
             }
+            return input;
         }
-        return input;
+    }
+
+    private static int acceptIntegerInput(String message) {
+        int input = 0;
+        while (true) {
+            try {
+                input = Integer.parseInt(acceptStringInput(message));
+            } catch (NumberFormatException exception) {
+                System.out.println("You entered an invalid integer.");
+            }
+            return input;
+        }
     }
 
     // TODO Jomari
+    // FINISHED BY: Kurt
+    // Do your assigned work next time, wag pabigat :) - Kurt
     // Method for accepting integer input
     // Used for inputting Grades
     // and for searching the ArrayList for grades
     // inputted by the user
     // handle exceptions locally (do not use a throws clause!)
-    private static double acceptDoubleInput(int n) {
-        
-        return 0.0;
+    private static double acceptDoubleInput(String message) {
+        Double input = 0.0;
+        while (true) {
+            try {
+                input = Double.parseDouble(acceptStringInput(message));
+            } catch (NumberFormatException e) {
+                System.out.println("You entered an invalid Double value.");
+            }
+            return input;
+        }
     }
 
-    private static String acceptStringInput() {
-        String userInput = null;
+    private static String acceptStringInput(String message) {
+        String userInput;
         while(true) {
-            System.out.print("User Input: ");
+            System.out.print(message);
             userInput = keyboard.nextLine();
             if (userInput != null) return userInput;
         }
@@ -268,32 +298,31 @@ public class CourseAdministration {
         byte choice = 0;
         do { // validates the input
             try {
-                System.out.print("Enter a number: ");
-                choice = Byte.parseByte(keyboard.nextLine());
+                choice = acceptByteInput("Select an item: ");
                 if (choice < 1 || choice > 8)
                     System.out.println("The number must be from 1 to 8.");
                 switch(choice){
                     case 1:
-                    showCourses(courseList);
-                    break;
+                        showCourses(courseList);
+                        break;
                     case 2:
-                    showCoursesWithGrades(courseList);
-                    break;
+                        showCoursesWithGrades(courseList);
+                        break;
                     case 3:
-                    showElectiveCourses(courseList);
-                    break;
+                        showElectiveCourses(courseList);
+                        break;
                     case 4:
-                    showFailedCourses(courseList);
-                    break;
+                        showFailedCourses(courseList);
+                        break;
                     case 5:
-                    inputGrades();
-                    break;
+                        inputGrades(courseList);
+                        break;
                     case 6:
-                    editCourse(courseList);
-                    break;
+                        editCourse(courseList);
+                        break;
                     case 7:
-                    shiftCourse(courseList);
-                    break;
+                        shiftCourse(courseList);
+                        break;
                 }
             } catch (NumberFormatException x) {
                 System.out.println("You entered an invalid integer.");
