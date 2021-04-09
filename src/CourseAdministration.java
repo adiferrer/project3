@@ -50,14 +50,6 @@ public class CourseAdministration {
         return courseInfo.toArray(new String[6]);
     }
 
-    // TODO EJ
-    // Implement if parseCSV() does not have a case
-    // for a CSV file with grades
-    protected static List<Course> parseCSVWithGrades() {
-        ArrayList<Course> c = new ArrayList<Course>();
-        return c;
-    }
-
     // TODO Jomari
     // Implement two cases: ascending and descending
     // NOTE: THIS METHOD DOES NOT DISPLAY THE COURSES
@@ -79,12 +71,47 @@ public class CourseAdministration {
         return c;
     }
 
+    // TODO Enrico
+    // Prints a formatted result similar to what is
+    // Displayed in the course specification
+    // PRINT OUTPUTS ONLY, DO NOT MANIPULATE THE ARRAYLIST
+    private static void showCourses(ArrayList<Course> courseList) {
+        System.out.println("\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t      COURSES");
+        for (int i = 0; i < 145; i++) System.out.print("-");
+        System.out.printf("\n%-15s %-110s %-8s %-6s\n", "COURSE NO.","COURSE DESCRIPTION", "UNITS", "GRADE");
+        for (Course c:courseList)
+            System.out.println(c.toString());
+    }
+
     private static void showFailedCourses(ArrayList<Course> courseList) {
         System.out.println("FAILED COURSES");
-        System.out.printf("%-15s %-50s %-5s\n", "COURSE NO.", "COURSE DESCRIPTION", "GRADE");
+
+        int y = 1, t = 1;
+        System.out.printf("\n%-15s %-110s %-8s %-6s\n", "COURSE NO.","COURSE DESCRIPTION", "UNITS", "GRADE");
         for (Course c: courseList) {
             if (hasFailedCourse(c))
-                System.out.printf("%-15s %-50s %-5.2f\n", c.getCourseNumber(), c.getDescriptiveTitle(), c.getGrades());
+                System.out.println(c.toString());
+        }
+
+        System.out.println(t);
+    }
+
+    private static void displayHeader(int y, int t) {
+        switch (y) {
+            case 1:
+                switch (t) {
+                    case 1:
+
+                        System.out.println("""
+                                ------------------------------------------------------------------------------------------------ 
+                                Year = First Year Term = First Semester
+                                """);
+                        System.out.printf("\n%-15s %-110s %-8s %-6s\n", "COURSE NO.","COURSE DESCRIPTION", "UNITS", "GRADE");
+                        break;
+                }
+                break;
+            case 2:
+                break;
         }
     }
 
@@ -134,17 +161,7 @@ public class CourseAdministration {
             """);
     } 
 
-    // TODO Enrico
-    // Prints a formatted result similar to what is
-    // Displayed in the course specification
-    // PRINT OUTPUTS ONLY, DO NOT MANIPULATE THE ARRAYLIST
-    private static void showCourses(ArrayList<Course> courseList) {
-        System.out.println("\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t      COURSES");
-        for (int i = 0; i < 145; i++) System.out.print("-");
-        System.out.printf("\n%-15s %-110s %-8s %-6s\n", "COURSE NO.","COURSE DESCRIPTION", "UNITS", "GRADE");
-        for (Course c:courseList)
-            System.out.println(c.toString());
-    }
+
 
     // TODO Adi
     // Specifications similar to the showCourses() method,
@@ -238,7 +255,7 @@ public class CourseAdministration {
 
     private static void inputBuffer() {
         System.out.println();
-        System.out.print("Press enter to continue");
+        System.out.print("Press enter key to see courses for the next term.");
         keyboard.nextLine();
         System.out.println();
     }
