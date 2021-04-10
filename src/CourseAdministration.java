@@ -246,12 +246,89 @@ public class CourseAdministration {
     }
 
     // TODO Andre
-    // Read the project specification, specifically items
-    // Two and Three
-    private static void shiftCourse(ArrayList<Course> course) {
-        // note: compareTo
-        // note: shift from another program?
+    protected static ArrayList<Course> parseShifterCSV() {
+        ArrayList<Course> shifterCourseList = new ArrayList<>();
+        String l;
+        try {
+            br = new BufferedReader(new FileReader("ShifterData.csv"));
+            br.readLine();
+            while ((l = br.readLine()) != null) {
+                String[] cSV = l.split(",");
+                if (cSV.length < 6) cSV = buildArray(l.split(","));
+                Course cTemp = new Course();
+                cTemp.setYear(Byte.parseByte(cSV[0]));
+                cTemp.setTerm(Byte.parseByte(cSV[1]));
+                cTemp.setCourseNumber(cSV[2]);
+                cTemp.setDescriptiveTitle(cSV[3]);
+                cTemp.setUnits(Double.parseDouble(cSV[4]));
+                if (cSV[5].equals("")) cTemp.setGrades(0);
+                else cTemp.setGrades(Double.parseDouble(cSV[5]));
+                shifterCourseList.add(cTemp);
+            }
+        } catch (FileNotFoundException e) {
+        } catch (IOException e) {
+        } return shifterCourseList;
+    }
 
+    private static void shiftCourse(ArrayList<Course> courseList) {
+        ArrayList<Course> shifterCourseList = parseShifterCSV();
+        char shiftChoice;
+
+        System.out.print("Are you sure you want to shift courses?(y/n): ");
+        shiftChoice = keyboard.next().charAt(0);
+
+        if (shiftChoice != 'y' && shiftChoice != 'Y') {
+            System.out.println();
+            showMenu();
+            return;
+        }
+
+        for (Course sC: shifterCourseList) {
+            for (Course c: courseList) {
+                if ((sC.getDescriptiveTitle()).compareToIgnoreCase(c.getDescriptiveTitle())==0) {
+                    c.setGrades(sC.getGrades());
+                    break;
+                }
+            }
+        }
+        System.out.println();
+        System.out.print("YOUR COURSES");
+        showShifterCourses(shifterCourseList);
+
+        showUncarriedCourses(courseList, shifterCourseList);
+
+        System.out.println();
+        System.out.print("You have successfully shifted courses!\n");
+        System.out.println();
+    }
+
+    private static void showShifterCourses(ArrayList<Course> shifterCourseList) {
+        System.out.printf("\n%-15s %-110s %-8s %-6s\n", "COURSE NO.","COURSE DESCRIPTION", "UNITS", "GRADE");
+        for (Course sC: shifterCourseList) {
+            System.out.println(sC.toString());
+        }
+    }
+
+    private static void showUncarriedCourses(ArrayList<Course> courseList, ArrayList<Course> shifterCourseList) {
+        int prevSize;
+        int curSize = 0;
+
+        do {
+            prevSize = curSize;
+            for (int i = 0; i < shifterCourseList.size(); i++) {
+                for (Course c: courseList) {
+                    if ((shifterCourseList.get(i)).getDescriptiveTitle().compareToIgnoreCase(c.getDescriptiveTitle())==0) {
+                        shifterCourseList.remove(i);
+                        break;
+                    }
+                }
+            }
+            curSize = shifterCourseList.size();
+        } while (prevSize != curSize);
+
+        System.out.println();
+        System.out.print("UNCARRIED COURSES");
+        showShifterCourses(shifterCourseList);
     }
 
     private static boolean hasFailedCourse(Course course) {
