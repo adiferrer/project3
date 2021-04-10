@@ -1,7 +1,8 @@
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Scanner;
 
 public class CourseAdministration {
@@ -48,66 +49,199 @@ public class CourseAdministration {
         return courseInfo.toArray(new String[6]);
     }
 
-    // TODO Jomari
-    // Implement two cases: ascending and descending
-    // NOTE: THIS METHOD DOES NOT DISPLAY THE COURSES
-    // THIS METHOD JUST REARRANGES AN EXISTING COURSE LIST
-    // KEEPING THE CONTENTS OF AN ARRAYLIST INTACT
-    private static ArrayList<Course> sortCoursesByGPA(int key){
-        ArrayList<Course> c = new ArrayList<Course>();
+    // TODO EJ
+    private static void saveChangesToFile(ArrayList<Course> courseList) {
+        String decision = "x";
+        String line;
+        System.out.println("The changes will be permanent. Are you sure? Y/N");
+        decision = keyboard.nextLine();
+        if (decision.equals("Y") || decision.equals("y")) {
+            try {
+                for(Course c:courseList) System.out.println(c);
 
-        switch(key) {
+                PrintWriter outputWriter =
+                        new PrintWriter(new FileWriter("BSCSCurriculumData1WithGradesCopy.csv"));
+                for(int i =0; i < courseList.size(); i++) outputWriter.println(courseList.get(i));
+                outputWriter.close();
+            } catch (IOException ioException) {
+                System.out.println("I/O error: " +ioException);
+            }
+        } else {
+            System.out.println("The changes was not saved.");
+        }
+    }
+
+    private static void displayHeader(int year, int term) {
+        switch (year) {
             case 1:
-                // ascending arranged
-                // c.sort();
+                switch (term) {
+                    case 1 -> {
+                        for (int i = 0; i < 145; i++) System.out.print("-");
+                        System.out.println("\nYear = First Year\tTerm = First Semester ");
+                        System.out.printf("%-15s %-110s %-8s %-6s\n", "COURSE NO.", "COURSE DESCRIPTION", "UNITS", "GRADE");
+                        for (int i = 0; i < 145; i++) System.out.print("-");
+                        System.out.println();
+                    }
+                    case 2 -> {
+                        for (int i = 0; i < 145; i++) System.out.print("-");
+                        System.out.println("\nYear = First Year\tTerm = Second Semester ");
+                        System.out.printf("%-15s %-110s %-8s %-6s\n", "COURSE NO.", "COURSE DESCRIPTION", "UNITS", "GRADE");
+                        for (int i = 0; i < 145; i++) System.out.print("-");
+                        System.out.println();
+                    }
+                    case 3 -> {
+                        for (int i = 0; i < 145; i++) System.out.print("-");
+                        System.out.println("\nYear = First Year\tTerm = Third Semester ");
+                        System.out.printf("%-15s %-110s %-8s %-6s\n", "COURSE NO.", "COURSE DESCRIPTION", "UNITS", "GRADE");
+                        for (int i = 0; i < 145; i++) System.out.print("-");
+                        System.out.println();
+                    }
+                }
                 break;
             case 2:
-                //descending arraged
-                // c.sort();
+                switch (term) {
+                    case 1 -> {
+                        for (int i = 0; i < 145; i++) System.out.print("-");
+                        System.out.println("\nYear = Second Year\tTerm = First Semester ");
+                        System.out.printf("%-15s %-110s %-8s %-6s\n", "COURSE NO.", "COURSE DESCRIPTION", "UNITS", "GRADE");
+                        for (int i = 0; i < 145; i++) System.out.print("-");
+                        System.out.println();
+                    }
+                    case 2 -> {
+                        for (int i = 0; i < 145; i++) System.out.print("-");
+                        System.out.println("\nYear = Second Year\tTerm = Second Semester ");
+                        System.out.printf("%-15s %-110s %-8s %-6s\n", "COURSE NO.", "COURSE DESCRIPTION", "UNITS", "GRADE");
+                        for (int i = 0; i < 145; i++) System.out.print("-");
+                        System.out.println();
+                    }
+                    case 3 -> {
+                        for (int i = 0; i < 145; i++) System.out.print("-");
+                        System.out.println("\nYear = Second Year\tTerm = Third Semester ");
+                        System.out.printf("%-15s %-110s %-8s %-6s\n", "COURSE NO.", "COURSE DESCRIPTION", "UNITS", "GRADE");
+                        for (int i = 0; i < 145; i++) System.out.print("-");
+                        System.out.println();
+                    }
+                }
+                break;
+            case 3:
+                switch (term) {
+                    case 1 -> {
+                        for (int i = 0; i < 145; i++) System.out.print("-");
+                        System.out.println("\nYear = Third Year\tTerm = First Semester ");
+                        System.out.printf("%-15s %-110s %-8s %-6s\n", "COURSE NO.", "COURSE DESCRIPTION", "UNITS", "GRADE");
+                        for (int i = 0; i < 145; i++) System.out.print("-");
+                        System.out.println();
+                    }
+                    case 2 -> {
+                        for (int i = 0; i < 145; i++) System.out.print("-");
+                        System.out.println("\nYear = Third Year\tTerm = Second Semester ");
+                        System.out.printf("%-15s %-110s %-8s %-6s\n", "COURSE NO.", "COURSE DESCRIPTION", "UNITS", "GRADE");
+                        for (int i = 0; i < 145; i++) System.out.print("-");
+                        System.out.println();
+                    }
+                    case 3 -> {
+                        for (int i = 0; i < 145; i++) System.out.print("-");
+                        System.out.println("\nYear = Third Year\tTerm = Third Semester ");
+                        System.out.printf("%-15s %-110s %-8s %-6s\n", "COURSE NO.", "COURSE DESCRIPTION", "UNITS", "GRADE");
+                        for (int i = 0; i < 145; i++) System.out.print("-");
+                        System.out.println();
+                    }
+                }
+                break;
+            case 4:
+                switch (term) {
+                    case 1 -> {
+                        for (int i = 0; i < 145; i++) System.out.print("-");
+                        System.out.println("\nYear = Fourth Year\tTerm = First Semester ");
+                        System.out.printf("%-15s %-110s %-8s %-6s\n", "COURSE NO.", "COURSE DESCRIPTION", "UNITS", "GRADE");
+                        for (int i = 0; i < 145; i++) System.out.print("-");
+                        System.out.println();
+                    }
+                    case 2 -> {
+                        for (int i = 0; i < 145; i++) System.out.print("-");
+                        System.out.println("\nYear = Fourth Year\tTerm = Second Semester ");
+                        System.out.printf("%-15s %-110s %-8s %-6s\n", "COURSE NO.", "COURSE DESCRIPTION", "UNITS", "GRADE");
+                        for (int i = 0; i < 145; i++) System.out.print("-");
+                        System.out.println();
+                    }
+                    case 3 -> {
+                        for (int i = 0; i < 145; i++) System.out.print("-");
+                        System.out.println("\nYear = Fourth Year\tTerm = Third Semester ");
+                        System.out.printf("%-15s %-110s %-8s %-6s\n", "COURSE NO.", "COURSE DESCRIPTION", "UNITS", "GRADE");
+                        for (int i = 0; i < 145; i++) System.out.print("-");
+                        System.out.println();
+                    }
+                }
+                break;
+            case 5:
+                switch (term) {
+                    case 1 -> {
+                        for (int i = 0; i < 145; i++) System.out.print("-");
+                        System.out.println("\nYear = Fifth Year\tTerm = First Semester ");
+                        System.out.printf("%-15s %-110s %-8s %-6s\n", "COURSE NO.", "COURSE DESCRIPTION", "UNITS", "GRADE");
+                        for (int i = 0; i < 145; i++) System.out.print("-");
+                        System.out.println();
+                    }
+                    case 2 -> {
+                        for (int i = 0; i < 145; i++) System.out.print("-");
+                        System.out.println("\nYear = Fifth Year\tTerm = Second Semester ");
+                        System.out.printf("%-15s %-110s %-8s %-6s\n", "COURSE NO.", "COURSE DESCRIPTION", "UNITS", "GRADE");
+                        for (int i = 0; i < 145; i++) System.out.print("-");
+                        System.out.println();
+                    }
+                    case 3 -> {
+                        for (int i = 0; i < 145; i++) System.out.print("-");
+                        System.out.println("\nYear = Fifth Year\tTerm = Third Semester ");
+                        System.out.printf("%-15s %-110s %-8s %-6s\n", "COURSE NO.", "COURSE DESCRIPTION", "UNITS", "GRADE");
+                        for (int i = 0; i < 145; i++) System.out.print("-");
+                        System.out.println();
+                    }
+                }
                 break;
         }
-        return c;
+    }
+
+    private static void termBuffer() {
+        System.out.println();
+        System.out.print("Press enter key to see courses for the next term.");
+        keyboard.nextLine();
+        System.out.println();
     }
 
     // TODO Enrico
-    // Prints a formatted result similar to what is
-    // Displayed in the course specification
-    // PRINT OUTPUTS ONLY, DO NOT MANIPULATE THE ARRAYLIST
+    // refer to showFailedCourses to show courses per term
     private static void showCourses(ArrayList<Course> courseList) {
         System.out.println("\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t      COURSES");
         for (int i = 0; i < 145; i++) System.out.print("-");
         System.out.printf("\n%-15s %-110s %-8s %-6s\n", "COURSE NO.","COURSE DESCRIPTION", "UNITS", "GRADE");
         for (Course c:courseList)
-            System.out.println(c.toString());
+            System.out.println(c);
     }
 
     private static void showFailedCourses(ArrayList<Course> courseList) {
-        System.out.println("FAILED COURSES");
+        ArrayList<Course> courseListCopy = new ArrayList<Course>();
+        int highestYear = 1, highestTerm = 1;
+        for (Course c: courseList) {
+            if (c.getGrades() != 0) {
+                highestYear = c.getYear();
+                highestTerm = c.getTerm();
+                courseListCopy.add(c);
+            }
+        }
 
-        int y = 1, t = 1;
-        System.out.printf("\n%-15s %-110s %-8s %-6s\n", "COURSE NO.","COURSE DESCRIPTION", "UNITS", "GRADE");
-        for (Course c: courseList)
-            if (hasFailedCourse(c))
-                System.out.println(c.toString());
-        System.out.println(t);
-    }
-
-    private static void displayHeader(int y, int t) {
-        switch (y) {
-            case 1:
-                switch (t) {
-                    case 1:
-
-                        System.out.println("""
-                                ------------------------------------------------------------------------------------------------ 
-                                Year = First Year Term = First Semester
-                                """);
-                        System.out.printf("\n%-15s %-110s %-8s %-6s\n", "COURSE NO.","COURSE DESCRIPTION", "UNITS", "GRADE");
+        System.out.println("\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t      FAILED COURSES");
+        for (int y = 1; y <= highestYear; y++) {
+            for (int t = 1; t <= highestTerm; t++) {
+                displayHeader(y, t);
+                for (Course c: courseListCopy) {
+                    if (c.getYear() == y && c.getTerm() == t) {
+                        if (hasFailedCourse(c)) System.out.println(c);
+                    } else {
+                        termBuffer();
                         break;
+                    }
                 }
-                break;
-            case 2:
-                break;
+            }
         }
     }
 
@@ -120,14 +254,206 @@ public class CourseAdministration {
 
     }
 
-    // TODO Enrico
-    private static ArrayList<Course> inputGrades() {
-        ArrayList<Course> c = new ArrayList<Course>();
-        return c;
-    }
-
     private static boolean hasFailedCourse(Course course) {
         return course.getGrades() < 75 && course.getGrades() != 0;
+    }
+
+    // TODO Adi
+    private static void showCoursesWithGrades(ArrayList<Course> courseList) {
+        ArrayList<Course> courseListCopy = new ArrayList<Course>();
+        int highestYear = 1, highestTerm = 1;
+        for (Course c: courseList) {
+            if (c.getGrades() != 0) {
+                highestYear = c.getYear();
+                highestTerm = c.getTerm();
+                courseListCopy.add(c);
+            }
+        }
+
+        System.out.println("\t\t\t\t\t\t\t\t\t\t\t\t\t\t   COURSES WITH GRADES");
+        for (int y = 1; y <= highestYear; y++) {
+            for (int t = 1; t <= highestTerm; t++) {
+                displayHeader(y, t);
+                for (Course c: courseListCopy) {
+                    if (c.getYear() == y && c.getTerm() == t) {
+                        System.out.println(c);
+                    } else {
+                        termBuffer();
+                        break;
+                    }
+                }
+            }
+        }
+
+        /*System.out.println("\t\t\t\t\t\t\t\t\t\t\t\t\t\t   ASCENDING ORDER");
+        System.out.printf("%-15s %-110s %-8s %-6s\n", "COURSE NO.","COURSE DESCRIPTION", "UNITS", "GRADE");
+        courseList = sortCoursesByGPA(courseList, 1);
+        for (Course c: courseList) System.out.println(c);
+
+        System.out.println("\t\t\t\t\t\t\t\t\t\t\t\t\t\t   DESCENDING ORDER");
+        System.out.printf("%-15s %-110s %-8s %-6s\n", "COURSE NO.","COURSE DESCRIPTION", "UNITS", "GRADE");
+        courseList = sortCoursesByGPA(courseList, 2);
+        for (Course c: courseList) System.out.println(c);*/
+    }
+
+    // TODO Jomari
+    // Completed By: Adi
+    private static ArrayList<Course> sortCoursesByGPA(ArrayList<Course> courseList, int key){
+        ArrayList<Course> courseListCopy = new ArrayList<Course>();
+        for (Course c: courseList) {
+            if (c.getGrades() != 0)
+                courseListCopy.add(c);
+        }
+
+        switch(key) {
+            case 1:
+                Collections.sort(courseListCopy, new Comparator<Course>() {
+                    @Override
+                    public int compare(Course c1, Course c2) {
+                        return Double.compare(c1.getGrades(), c2.getGrades());
+                    }
+                });
+                break;
+            case 2:
+                Collections.sort(courseListCopy, new Comparator<Course>() {
+                    @Override
+                    public int compare(Course c1, Course c2) {
+                        return Double.compare(c1.getGrades(), c2.getGrades());
+                    }
+                });
+                Collections.reverse(courseListCopy);
+                break;
+        }
+        return courseListCopy;
+    }
+
+    private static void showElectiveCourses(ArrayList<Course> courseList) {
+        System.out.println("\t\t\t\t\t\t\t\t\t\t\t\t\t\t   ELECTIVE COURSES");
+        for (int i = 0; i < 145; i++) System.out.print("-");
+        System.out.printf("\n%-15s %-110s %-8s %-6s\n", "COURSE NO.","COURSE DESCRIPTION", "UNITS", "GRADE");
+        for (Course c : courseList)
+            if (c.getIsElective())
+                System.out.println(c.toString());
+    }
+
+    private static void showCoursesWithoutGPA(ArrayList<Course> courseList) {
+        System.out.println("\t\t\t\t\t\t\t\t\t\t\t\t\t\t   SHOWING COURSES WITHOUT GPA");
+        for (int i = 0; i < 145; i++) System.out.print("-");
+        System.out.printf("\n%-15s %-110s %-8s %-6s\n", "COURSE NO.","COURSE DESCRIPTION", "UNITS", "GRADE");
+        for (Course c : courseList)
+            if (c.getGrades() == 0.0)
+                System.out.println(c);
+    }
+
+    private static Course searchCourseList(ArrayList<Course> courseList,
+                                           String searchKey) {
+        for (Course course : courseList) {
+            if (course.getCourseNumber().equalsIgnoreCase(searchKey))
+                return course;
+        }
+        return new Course();
+    }
+
+    private static void inputGrades(ArrayList<Course> courseList) {
+        Course selectedCourse;
+        String searchKey;
+        do {
+            showCoursesWithoutGPA(courseList);
+            searchKey = acceptStringInput("Enter a course number: ");
+            selectedCourse = searchCourseList(courseList, searchKey);
+            if (selectedCourse.getCourseNumber().equals(""))
+                System.out.println("Invalid Course Number inputted. Try again.");
+        } while (selectedCourse.getCourseNumber().equals(""));
+        selectedCourse.setGrades(acceptDoubleInput("Input GPA: "));
+    }
+
+    private static void editCourse(ArrayList<Course> courseList) {
+        Course courseToBeChanged;
+        String searchKey;
+
+        do {
+            showCourses(courseList);
+            searchKey = acceptStringInput("Enter course number to be changed (ex. CS 122): ");
+            courseToBeChanged = searchCourseList(courseList, searchKey);
+            if (courseToBeChanged.getCourseNumber().equals(""))
+                System.out.println("Invalid Course Number inputted. Try again.");
+            else {
+                for (Course c: courseList) {
+                    if (c.getCourseNumber().compareToIgnoreCase(courseToBeChanged.getCourseNumber()) == 0) {
+                        String newCN = acceptStringInput("Enter the new course number: ");
+                        String newTitle = acceptStringInput("Enter the new descriptive title: ");
+                        c.setCourseNumber(newCN);
+                        c.setDescriptiveTitle(newTitle);
+                        break;
+                    }
+                }
+            }
+        } while (courseToBeChanged.getCourseNumber().equals(""));
+    }
+
+    private static byte acceptByteInput(String message) {
+        byte input = -1;
+        while (true) {
+            try {
+                input = Byte.parseByte(acceptStringInput(message));
+                if (input != -1) return input;
+            } catch (NumberFormatException exception) {
+                System.out.println("You have entered an invalid integer.");
+            } catch (Exception exception) {
+                System.out.println("Fatal error: " + exception);
+            }
+        }
+    }
+
+    private static int acceptIntegerInput(String message) {
+        int input = -1;
+        while (true) {
+            try {
+                input = Integer.parseInt(acceptStringInput(message));
+                if (input != -1) return input;
+            } catch (NumberFormatException exception) {
+                System.out.println("You have entered an invalid integer.");
+            } catch (Exception exception) {
+                System.out.println("Fatal error: " + exception);
+            }
+        }
+    }
+
+    private static double acceptDoubleInput(String message) {
+        Double input = -1.0;
+        while (true) {
+            try {
+                input = Double.parseDouble(acceptStringInput(message));
+                if (input != -1.0) return input;
+            } catch (NumberFormatException exception) {
+                System.out.println("You have entered an invalid Double value.");
+            } catch (Exception exception){
+                System.out.println("Fatal error: " + exception);
+            }
+        }
+    }
+
+    private static String acceptStringInput(String message) {
+        String userInput;
+        while(true) {
+            System.out.print(message);
+            userInput = keyboard.nextLine();
+            if (userInput != null) return userInput;
+        }
+    }
+
+    private static void inputBuffer() {
+        System.out.println();
+        System.out.print("Press enter key to choose another item.");
+        keyboard.nextLine();
+        System.out.println();
+    }
+
+    // TODO ADI AND KURT
+    // Displays the contributions of each member
+    // When invoked through the main menu
+    private static void aboutTheDevelopers() {
+
     }
 
     private static void showIntroduction() {
@@ -147,147 +473,11 @@ public class CourseAdministration {
              <5> Enter grades for subjects recently finished
              <6> Edit a course
              <7> Shift from another program
-             <8> Quit
+             <8> Save changes to file
+             <9> About the developers
+             <10> Quit
             =================================================
             """);
-    }
-
-
-
-    // TODO Adi
-    // Specifications similar to the showCourses() method,
-    // However this method prints only courses with a GPA
-    private static void showCoursesWithGrades(ArrayList<Course> courseList) {
-        System.out.println("\t\t\t\t\t\t\t\t\t\t\t\t\t\t   COURSES WITH GRADES");
-        for (int i = 0; i < 145; i++) System.out.print("-");
-        System.out.printf("\n%-15s %-110s %-8s %-6s\n", "COURSE NO.","COURSE DESCRIPTION", "UNITS", "GRADE");
-        for (Course c:courseList) {
-            if (c.getGrades() > 0)
-                System.out.println(c.toString());
-        }
-    }
-
-    // TODO KURT
-    // Show only elective courses
-    // DONE, TEST CODE PLS
-    private static void showElectiveCourses(ArrayList<Course> courseList) {
-        System.out.println("\t\t\t\t\t\t\t\t\t\t\t\t\t\t   ELECTIVE COURSES");
-        for (int i = 0; i < 145; i++) System.out.print("-");
-        System.out.printf("\n%-15s %-110s %-8s %-6s\n", "COURSE NO.","COURSE DESCRIPTION", "UNITS", "GRADE");
-        for (Course c : courseList)
-            if (c.getIsElective())
-                System.out.println(c.toString());
-    }
-
-    private static void showCoursesWithoutGPA(ArrayList<Course> courseList) {
-        System.out.println("\t\t\t\t\t\t\t\t\t\t\t\t\t\t   SHOWING COURSES WITHOUT GPA");
-        for (int i = 0; i < 145; i++) System.out.print("-");
-        System.out.printf("\n%-15s %-110s %-8s %-6s\n", "COURSE NO.","COURSE DESCRIPTION", "UNITS", "GRADE");
-        for (Course c : courseList)
-            if (c.getGrades() != 0.0)
-                System.out.println(c.toString());
-
-    }
-
-    private static Course searchCourseList(ArrayList<Course> courseList,
-                                           String searchKey) {
-        for (Course course : courseList) {
-            if (course.getCourseNumber().equalsIgnoreCase(searchKey))
-                return course;
-        }
-        return new Course();
-    }
-
-    // TODO KURT
-    // Similar to editCourse
-    // Print courses that have no GPA yet
-    // Then allow user to select from that list
-    private static void inputGrades(ArrayList<Course> courseList) {
-        Course selectedCourse;
-        String searchKey;
-        do {
-            showCoursesWithoutGPA(courseList);
-            searchKey = acceptStringInput("Enter a course number: ");
-            selectedCourse = searchCourseList(courseList, searchKey);
-            if (selectedCourse.getCourseNumber().equals(""))
-                System.out.println("Invalid Course Number inputted. Try again.");
-        } while (selectedCourse.getCourseNumber().equals(""));
-        selectedCourse.setGrades(acceptDoubleInput("Input GPA: "));
-    }
-
-    private static void editCourse(ArrayList<Course> courseList) {
-        System.out.print("Enter course number to be changed (ex. CS122): ");
-        String courseNumberToChange = keyboard.nextLine();
-        for (int i = 0; i < courseList.size(); i++) {
-            String cN = courseList.get(i).getCourseNumber();
-            if (cN.compareToIgnoreCase(courseNumberToChange) == 0) {
-                String newCN = acceptStringInput("Enter the new course number: ");
-                String newTitle = acceptStringInput("Enter the new descriptive title: ");
-                courseList.get(i).setCourseNumber(newCN);
-                courseList.get(i).setDescriptiveTitle(newTitle);
-                break;
-            }
-        }
-    }
-
-    private static byte acceptByteInput(String message) {
-        byte input = 0;
-        while (true) {
-            try {
-                input = Byte.parseByte(acceptStringInput(message));
-            } catch (NumberFormatException exception) {
-                System.out.println("You entered an invalid integer.");
-            }
-            return input;
-        }
-    }
-
-    private static int acceptIntegerInput(String message) {
-        int input = 0;
-        while (true) {
-            try {
-                input = Integer.parseInt(acceptStringInput(message));
-            } catch (NumberFormatException exception) {
-                System.out.println("You entered an invalid integer.");
-            }
-            return input;
-        }
-    }
-
-    // TODO Jomari
-    // FINISHED BY: Kurt
-    // Do your assigned work next time, wag pabigat :) - Kurt
-    // Method for accepting integer input
-    // Used for inputting Grades
-    // and for searching the ArrayList for grades
-    // inputted by the user
-    // handle exceptions locally (do not use a throws clause!)
-    private static double acceptDoubleInput(String message) {
-        Double input = 0.0;
-        while (true) {
-            try {
-                input = Double.parseDouble(acceptStringInput(message));
-            } catch (NumberFormatException e) {
-                System.out.println("You entered an invalid Double value.");
-            }
-            return input;
-        }
-    }
-
-    private static String acceptStringInput(String message) {
-        String userInput;
-        while(true) {
-            System.out.print(message);
-            userInput = keyboard.nextLine();
-            if (userInput != null) return userInput;
-        }
-    }
-
-    private static void inputBuffer() {
-        System.out.println();
-        System.out.print("Press enter key to see courses for the next term.");
-        keyboard.nextLine();
-        System.out.println();
     }
 
     // TODO Jerome
@@ -304,29 +494,44 @@ public class CourseAdministration {
                 switch(choice){
                     case 1:
                         showCourses(courseList);
+                        inputBuffer();
                         break;
                     case 2:
                         showCoursesWithGrades(courseList);
+                        inputBuffer();
                         break;
                     case 3:
                         showElectiveCourses(courseList);
+                        inputBuffer();
                         break;
                     case 4:
                         showFailedCourses(courseList);
+                        inputBuffer();
                         break;
                     case 5:
                         inputGrades(courseList);
+                        inputBuffer();
                         break;
                     case 6:
                         editCourse(courseList);
+                        inputBuffer();
                         break;
                     case 7:
                         shiftCourse(courseList);
+                        inputBuffer();
+                        break;
+                    case 8:
+                        saveChangesToFile(courseList);
+                        inputBuffer();
+                        break;
+                    case 9:
+                        aboutTheDevelopers();
+                        inputBuffer();
                         break;
                 }
             } catch (NumberFormatException x) {
                 System.out.println("You entered an invalid integer.");
             }
-        } while (choice != 8);
+        } while (choice != 10);
     }
 }

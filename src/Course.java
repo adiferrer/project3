@@ -1,4 +1,4 @@
-class Course {
+class Course  {
     protected static final byte DEFAULT_BYTE = 0;
     protected static final double DEFAULT_DOUBLE = 0.0;
     protected static final String DEFAULT_STRING = "";
@@ -102,8 +102,8 @@ class Course {
 
     public int compareTo(Course another){
         if (this.toString().equals(another.toString()))
-            return 0; 
-        else if (this.toString().compareTo(another.toString()) < 0) 
+            return 0;
+        else if (this.toString().compareTo(another.toString()) < 0)
             return -1;
         else
             return 1;
