@@ -223,7 +223,7 @@ public class CourseAdministration {
     }
 
     // TODO Enrico
-    // refer to showFailedCourses to show courses per term
+    // refer to showCoursesWithGrades to show courses per term
     private static void showCourses(ArrayList<Course> courseList) {
         System.out.println("\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t      COURSES");
         for (int i = 0; i < 145; i++) System.out.print("-");
@@ -352,7 +352,6 @@ public class CourseAdministration {
         return course.getGrades() < 75 && course.getGrades() != 0;
     }
 
-    // TODO Adi
     private static void showCoursesWithGrades(ArrayList<Course> courseList) {
         int highestYear = 1;
         for (Course c: courseList) {
