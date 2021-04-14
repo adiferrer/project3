@@ -9,6 +9,9 @@ public class CourseAdministration {
     static BufferedReader br;
     static Scanner keyboard = new Scanner(System.in);
 
+    /**
+     * TODO: EJ
+     */
     protected static ArrayList<Course> parseCSV () {
         ArrayList<Course> courseList = new ArrayList<>();
         String line;
@@ -39,6 +42,9 @@ public class CourseAdministration {
         return courseList;
     }
 
+    /**
+     * TODO: EJ
+     */
     private static String[] buildArray(String[] csvLine) {
         ArrayList<String> courseInfo = new ArrayList<>(Arrays.asList(csvLine));
         int size = 6 - courseInfo.size();
@@ -49,7 +55,9 @@ public class CourseAdministration {
         return courseInfo.toArray(new String[6]);
     }
 
-    // TODO EJ
+    /**
+     * TODO: EJ
+     */
     private static void saveChangesToFile(ArrayList<Course> courseList) {
         String decision = "x";
         String line;
@@ -71,6 +79,9 @@ public class CourseAdministration {
         }
     }
 
+    /**
+     * TODO: EJ
+     */
     private static void displayHeader(int year, int term) {
         switch (year) {
             case 1:
@@ -201,6 +212,9 @@ public class CourseAdministration {
         }
     }
 
+    /**
+     * TODO: EJ
+     */
     private static void termBuffer() {
         System.out.println();
         System.out.print("Press enter key to see courses for the next term.");
@@ -217,6 +231,7 @@ public class CourseAdministration {
         for (Course c:courseList)
             System.out.println(c);
     }
+
 
     private static void showFailedCourses(ArrayList<Course> courseList) {
         ArrayList<Course> courseListCopy = new ArrayList<Course>();
