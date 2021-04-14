@@ -354,18 +354,21 @@ public class CourseAdministration {
 
     // TODO Adi
     private static void showCoursesWithGrades(ArrayList<Course> courseList) {
+        int highestYear = 1;
+        for (Course c: courseList) {
+            if (c.getYear() > highestYear) highestYear = c.getYear();
+        }
+
         System.out.println("\t\t\t\t\t\t\t\t\t\t\t\t\t\t   COURSES WITH GRADES");
-        for (int y = 1; y <= 5; y++) {
+        for (int y = 1; y <= highestYear; y++) {
             for (int t = 1; t <= 3; t++) {
                 displayHeader(y, t);
                 for (Course c: courseList) {
                     if (c.getYear() == y && c.getTerm() == t) {
                         System.out.println(c);
-                    } else {
-                        termBuffer();
-                        break;
                     }
                 }
+                termBuffer();
             }
         }
 
