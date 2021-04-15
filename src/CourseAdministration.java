@@ -12,7 +12,7 @@ public class CourseAdministration {
     /**
      * TODO: EJ
      */
-    protected static ArrayList<Course> parseCSV () {
+    protected static ArrayList<Course> parseCSV() {
         ArrayList<Course> courseList = new ArrayList<>();
         String line;
         try {
@@ -65,14 +65,14 @@ public class CourseAdministration {
         decision = keyboard.nextLine();
         if (decision.equals("Y") || decision.equals("y")) {
             try {
-                for(Course c:courseList) System.out.println(c);
+                for (Course c : courseList) System.out.println(c);
 
                 PrintWriter outputWriter =
                         new PrintWriter(new FileWriter("BSCSCurriculumData1WithGradesCopy.csv"));
-                for(int i =0; i < courseList.size(); i++) outputWriter.println(courseList.get(i));
+                for (int i = 0; i < courseList.size(); i++) outputWriter.println(courseList.get(i));
                 outputWriter.close();
             } catch (IOException ioException) {
-                System.out.println("I/O error: " +ioException);
+                System.out.println("I/O error: " + ioException);
             }
         } else {
             System.out.println("The changes were not saved.");
@@ -224,19 +224,32 @@ public class CourseAdministration {
 
     // TODO Enrico
     // refer to showCoursesWithGrades to show courses per term
+
+    /**
+     * TODO: Enrico
+     */
     private static void showCourses(ArrayList<Course> courseList) {
         System.out.println("\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t      COURSES");
         for (int i = 0; i < 145; i++) System.out.print("-");
-        System.out.printf("\n%-15s %-110s %-8s %-6s\n", "COURSE NO.","COURSE DESCRIPTION", "UNITS", "GRADE");
-        for (Course c:courseList)
+        System.out.printf("\n%-15s %-110s %-8s %-6s\n", "COURSE NO.", "COURSE DESCRIPTION", "UNITS", "GRADE");
+        for (Course c : courseList)
             System.out.println(c);
     }
 
-
+    /**
+     * This method displays the student's failed courses.
+     * <p>
+     * METHOD ALGORITHM: <br>
+     * 1) Create an ArrayList wherein courses with failing grades are added. <br>
+     * 2) Get the highest number of years and terms per year in the curriculum. <br>
+     * 3) Display courses with failing grades for each term.
+     *
+     * @param courseList the ArrayList of courses from the BSCSCurriculumData1WithGrades.csv file
+     */
     private static void showFailedCourses(ArrayList<Course> courseList) {
         ArrayList<Course> courseListCopy = new ArrayList<Course>();
         int highestYear = 1, highestTerm = 1;
-        for (Course c: courseList) {
+        for (Course c : courseList) {
             if (c.getGrades() != 0) {
                 highestYear = c.getYear();
                 highestTerm = c.getTerm();
@@ -248,7 +261,7 @@ public class CourseAdministration {
         for (int y = 1; y <= highestYear; y++) {
             for (int t = 1; t <= highestTerm; t++) {
                 displayHeader(y, t);
-                for (Course c: courseListCopy) {
+                for (Course c : courseListCopy) {
                     if (c.getYear() == y && c.getTerm() == t) {
                         if (hasFailedCourse(c)) System.out.println(c);
                     } else {
@@ -260,6 +273,9 @@ public class CourseAdministration {
         }
     }
 
+    /**
+     * TODO: Andre
+     */
     // TODO Andre
     protected static ArrayList<Course> parseShifterCSV() {
         ArrayList<Course> shifterCourseList = new ArrayList<>();
@@ -287,6 +303,9 @@ public class CourseAdministration {
         return shifterCourseList;
     }
 
+    /**
+     * TODO: Andre
+     */
     private static void shiftCourse(ArrayList<Course> courseList) {
         ArrayList<Course> shifterCourseList = parseShifterCSV();
         char shiftChoice;
@@ -300,9 +319,9 @@ public class CourseAdministration {
             return;
         }
 
-        for (Course sC: shifterCourseList) {
-            for (Course c: courseList) {
-                if ((sC.getDescriptiveTitle()).compareToIgnoreCase(c.getDescriptiveTitle())==0) {
+        for (Course sC : shifterCourseList) {
+            for (Course c : courseList) {
+                if ((sC.getDescriptiveTitle()).compareToIgnoreCase(c.getDescriptiveTitle()) == 0) {
                     c.setGrades(sC.getGrades());
                     break;
                 }
@@ -319,13 +338,19 @@ public class CourseAdministration {
         System.out.println();
     }
 
+    /**
+     * TODO: Andre
+     */
     private static void showShifterCourses(ArrayList<Course> shifterCourseList) {
-        System.out.printf("\n%-15s %-110s %-8s %-6s\n", "COURSE NO.","COURSE DESCRIPTION", "UNITS", "GRADE");
-        for (Course sC: shifterCourseList) {
+        System.out.printf("\n%-15s %-110s %-8s %-6s\n", "COURSE NO.", "COURSE DESCRIPTION", "UNITS", "GRADE");
+        for (Course sC : shifterCourseList) {
             System.out.println(sC.toString());
         }
     }
 
+    /**
+     * TODO: Andre
+     */
     private static void showUncarriedCourses(ArrayList<Course> courseList, ArrayList<Course> shifterCourseList) {
         int prevSize;
         int curSize = 0;
@@ -333,8 +358,8 @@ public class CourseAdministration {
         do {
             prevSize = curSize;
             for (int i = 0; i < shifterCourseList.size(); i++) {
-                for (Course c: courseList) {
-                    if ((shifterCourseList.get(i)).getDescriptiveTitle().compareToIgnoreCase(c.getDescriptiveTitle())==0) {
+                for (Course c : courseList) {
+                    if ((shifterCourseList.get(i)).getDescriptiveTitle().compareToIgnoreCase(c.getDescriptiveTitle()) == 0) {
                         shifterCourseList.remove(i);
                         break;
                     }
@@ -348,13 +373,25 @@ public class CourseAdministration {
         showShifterCourses(shifterCourseList);
     }
 
+    /**
+     * TODO: Jerome
+     */
     private static boolean hasFailedCourse(Course course) {
         return course.getGrades() < 75 && course.getGrades() != 0;
     }
 
+    /**
+     * This method displays courses with their corresponding grades.
+     * <p>
+     * METHOD ALGORITHM: <br>
+     * 1) Get the highest year in the curriculum. <br>
+     * 2) Print courses according to year and term.
+     *
+     * @param courseList the ArrayList of courses from the BSCSCurriculumData1WithGrades.csv file
+     */
     private static void showCoursesWithGrades(ArrayList<Course> courseList) {
         int highestYear = 1;
-        for (Course c: courseList) {
+        for (Course c : courseList) {
             if (c.getYear() > highestYear) highestYear = c.getYear();
         }
 
@@ -362,7 +399,7 @@ public class CourseAdministration {
         for (int y = 1; y <= highestYear; y++) {
             for (int t = 1; t <= 3; t++) {
                 displayHeader(y, t);
-                for (Course c: courseList) {
+                for (Course c : courseList) {
                     if (c.getYear() == y && c.getTerm() == t) {
                         System.out.println(c);
                     }
@@ -370,67 +407,68 @@ public class CourseAdministration {
                 termBuffer();
             }
         }
-
-        /*System.out.println("\t\t\t\t\t\t\t\t\t\t\t\t\t\t   ASCENDING ORDER");
-        System.out.printf("%-15s %-110s %-8s %-6s\n", "COURSE NO.","COURSE DESCRIPTION", "UNITS", "GRADE");
-        courseList = sortCoursesByGPA(courseList, 1);
-        for (Course c: courseList) System.out.println(c);
-
-        System.out.println("\t\t\t\t\t\t\t\t\t\t\t\t\t\t   DESCENDING ORDER");
-        System.out.printf("%-15s %-110s %-8s %-6s\n", "COURSE NO.","COURSE DESCRIPTION", "UNITS", "GRADE");
-        courseList = sortCoursesByGPA(courseList, 2);
-        for (Course c: courseList) System.out.println(c);*/
     }
 
-    // TODO Jomari
-    // Completed By: Adi
-    private static ArrayList<Course> sortCoursesByGPA(ArrayList<Course> courseList, int key){
+    /**
+     * This method sorts courses by GPA, either in ascending or descending order.
+     * <p>
+     * METHOD ALGORITHM: <br>
+     * 1) Create a new ArrayList wherein courses with grades are added. <br>
+     * 2) If choice is 1, return an ArrayList of courses with GPAs in ascending order. <br>
+     * Else, return an ArrayList of courses with GPAs in descending order.
+     *
+     * @param courseList the ArrayList of courses from the BSCSCurriculumData1WithGrades.csv file
+     * @param aOrD the choice indicating if the ArrayList should be sorted in descending or ascending order
+     * @return an ArrayList of sorted courses with GPA
+     */
+    private static ArrayList<Course> sortCoursesByGPA(ArrayList<Course> courseList, int aOrD) {
         ArrayList<Course> courseListCopy = new ArrayList<Course>();
-        for (Course c: courseList) {
+        for (Course c : courseList) {
             if (c.getGrades() != 0)
                 courseListCopy.add(c);
         }
 
-        switch(key) {
-            case 1:
-                Collections.sort(courseListCopy, new Comparator<Course>() {
-                    @Override
-                    public int compare(Course c1, Course c2) {
-                        return Double.compare(c1.getGrades(), c2.getGrades());
-                    }
-                });
-                break;
-            case 2:
-                Collections.sort(courseListCopy, new Comparator<Course>() {
-                    @Override
-                    public int compare(Course c1, Course c2) {
-                        return Double.compare(c1.getGrades(), c2.getGrades());
-                    }
-                });
+        switch (aOrD) {
+            case 1 -> Collections.sort(courseListCopy); // Ascending Order
+            case 2 -> { // Descending Order
+                Collections.sort(courseListCopy);
                 Collections.reverse(courseListCopy);
-                break;
+            }
         }
         return courseListCopy;
     }
 
+    /**
+     * TODO: Kurt
+     */
     private static void showElectiveCourses(ArrayList<Course> courseList) {
         System.out.println("\t\t\t\t\t\t\t\t\t\t\t\t\t\t   ELECTIVE COURSES");
         for (int i = 0; i < 145; i++) System.out.print("-");
-        System.out.printf("\n%-15s %-110s %-8s %-6s\n", "COURSE NO.","COURSE DESCRIPTION", "UNITS", "GRADE");
+        System.out.printf("\n%-15s %-110s %-8s %-6s\n", "COURSE NO.", "COURSE DESCRIPTION", "UNITS", "GRADE");
         for (Course c : courseList)
             if (c.getIsElective())
                 System.out.println(c.toString());
     }
 
+    /**
+     * This method shows courses that have no GPA.
+     * <p>
+     * METHOD ALGORITHM: <br>
+     * 1) Print out courses from courseList that do not have a GPA.
+     *
+     * @param courseList the ArrayList of courses from the BSCSCurriculumData1WithGrades.csv file
+     */
     private static void showCoursesWithoutGPA(ArrayList<Course> courseList) {
         System.out.println("\t\t\t\t\t\t\t\t\t\t\t\t\t\t   SHOWING COURSES WITHOUT GPA");
         for (int i = 0; i < 145; i++) System.out.print("-");
-        System.out.printf("\n%-15s %-110s %-8s %-6s\n", "COURSE NO.","COURSE DESCRIPTION", "UNITS", "GRADE");
+        System.out.printf("\n%-15s %-110s %-8s %-6s\n", "COURSE NO.", "COURSE DESCRIPTION", "UNITS", "GRADE");
         for (Course c : courseList)
-            if (c.getGrades() == 0.0)
-                System.out.println(c);
+            if (c.getGrades() == 0.0) System.out.println(c);
     }
 
+    /**
+     * TODO: Kurt
+     */
     private static Course searchCourseList(ArrayList<Course> courseList,
                                            String searchKey) {
         for (Course course : courseList) {
@@ -440,6 +478,9 @@ public class CourseAdministration {
         return new Course();
     }
 
+    /**
+     * TODO: Enrico
+     */
     private static void inputGrades(ArrayList<Course> courseList) {
         Course selectedCourse;
         String searchKey;
@@ -453,6 +494,19 @@ public class CourseAdministration {
         selectedCourse.setGrades(acceptDoubleInput("Input GPA: "));
     }
 
+    /**
+     * This method allows the user to edit a course's code and description.
+     * <p>
+     * METHOD ALGORITHM: <br>
+     * 1) Display the courses from courseList. <br>
+     * 2) Ask user for the course number to be changed. <br>
+     * 3) If the course entered is null or not found in the list, the user has to input a valid course.
+     * Else, the user is asked to enter a new course number and its new respective description
+     * for the chosen course. <br>
+     * 4) Display the new course number and its respective description.
+     *
+     * @param courseList the ArrayList of courses from the BSCSCurriculumData1WithGrades.csv file
+     */
     private static void editCourse(ArrayList<Course> courseList) {
         Course courseToBeChanged;
         String searchKey;
@@ -464,12 +518,14 @@ public class CourseAdministration {
             if (courseToBeChanged.getCourseNumber().equals(""))
                 System.out.println("Invalid Course Number inputted. Try again.");
             else {
-                for (Course c: courseList) {
+                for (Course c : courseList) {
                     if (c.getCourseNumber().compareToIgnoreCase(courseToBeChanged.getCourseNumber()) == 0) {
                         String newCN = acceptStringInput("Enter the new course number: ");
                         String newTitle = acceptStringInput("Enter the new descriptive title: ");
                         c.setCourseNumber(newCN);
                         c.setDescriptiveTitle(newTitle);
+                        System.out.println("New course number: " + c.getCourseNumber());
+                        System.out.println("New course description: " + c.getDescriptiveTitle());
                         break;
                     }
                 }
@@ -477,6 +533,9 @@ public class CourseAdministration {
         } while (courseToBeChanged.getCourseNumber().equals(""));
     }
 
+    /**
+     * TODO: EJ
+     */
     private static byte acceptByteInput(String message) {
         byte input = -1;
         while (true) {
@@ -491,6 +550,9 @@ public class CourseAdministration {
         }
     }
 
+    /**
+     * TODO: Jerome
+     */
     private static int acceptIntegerInput(String message) {
         int input = -1;
         while (true) {
@@ -505,6 +567,9 @@ public class CourseAdministration {
         }
     }
 
+    /**
+     * TODO: EJ
+     */
     private static double acceptDoubleInput(String message) {
         Double input = -1.0;
         while (true) {
@@ -513,21 +578,27 @@ public class CourseAdministration {
                 if (input != -1.0) return input;
             } catch (NumberFormatException exception) {
                 System.out.println("You have entered an invalid Double value.");
-            } catch (Exception exception){
+            } catch (Exception exception) {
                 System.out.println("Fatal error: " + exception);
             }
         }
     }
 
+    /**
+     * TODO: Kurt
+     */
     private static String acceptStringInput(String message) {
         String userInput;
-        while(true) {
+        while (true) {
             System.out.print(message);
             userInput = keyboard.nextLine();
             if (userInput != null) return userInput;
         }
     }
 
+    /**
+     * TODO: EJ
+     */
     private static void inputBuffer() {
         System.out.println();
         System.out.print("Press enter key to choose another item.");
@@ -542,32 +613,41 @@ public class CourseAdministration {
 
     }
 
+    /**
+     * TODO: Kurt
+     */
     private static void showIntroduction() {
         System.out.println("Welcome to the Course Administration program!");
         System.out.println("See menu below for available operations.");
         System.out.println();
     }
 
+    /**
+     * TODO: EJ
+     */
     private static void showMenu() {
         System.out.println("""
-            =================================================
-             My Checklist Management
-             <1> Show subjects for each school term
-             <2> Show subjects with grades for each term
-             <3> Show elective subjects only
-             <4> Show failed courses
-             <5> Enter grades for subjects recently finished
-             <6> Edit a course
-             <7> Shift from another program
-             <8> Save changes to file
-             <9> About the developers
-             <10> Quit
-            =================================================
-            """);
+                =================================================
+                 My Checklist Management
+                 <1> Show subjects for each school term
+                 <2> Show subjects with grades for each term
+                 <3> Show elective subjects only
+                 <4> Show failed courses
+                 <5> Enter grades for subjects recently finished
+                 <6> Edit a course
+                 <7> Shift from another program
+                 <8> Save changes to file
+                 <9> About the developers
+                 <10> Quit
+                =================================================
+                """);
     }
 
+    /**
+     * TODO: Jerome
+     */
     // TODO Jerome
-    public static void main (String[] args) {
+    public static void main(String[] args) {
         ArrayList<Course> courseList = parseCSV();
         showIntroduction();
         byte choice = 0;
@@ -577,7 +657,7 @@ public class CourseAdministration {
                 choice = acceptByteInput("Select an item: ");
                 if (choice < 1 || choice > 10)
                     System.out.println("The number must be from 1 to 8.");
-                switch(choice){
+                switch (choice) {
                     case 1:
                         showCourses(courseList);
                         inputBuffer();
