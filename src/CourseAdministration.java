@@ -222,18 +222,156 @@ public class CourseAdministration {
         System.out.println();
     }
 
-    // TODO Enrico
-    // refer to showCoursesWithGrades to show courses per term
+   private static void displayHeader(int year, int term) {
+        switch (year) {
+            case 1:
+                switch (term) {
+                    case 1 -> {
+                        for (int i = 0; i < 145; i++) System.out.print("-");
+                        System.out.println("\nYear = First Year\tTerm = First Semester ");
+                        System.out.printf("%-15s %-110s %-8s %-6s\n", "COURSE NO.", "COURSE DESCRIPTION", "UNITS");
+                        for (int i = 0; i < 145; i++) System.out.print("-");
+                        System.out.println();
+                    }
+                    case 2 -> {
+                        for (int i = 0; i < 145; i++) System.out.print("-");
+                        System.out.println("\nYear = First Year\tTerm = Second Semester ");
+                        System.out.printf("%-15s %-110s %-8s %-6s\n", "COURSE NO.", "COURSE DESCRIPTION", "UNITS");
+                        for (int i = 0; i < 145; i++) System.out.print("-");
+                        System.out.println();
+                    }
+                    case 3 -> {
+                        for (int i = 0; i < 145; i++) System.out.print("-");
+                        System.out.println("\nYear = First Year\tTerm = Third Semester ");
+                        System.out.printf("%-15s %-110s %-8s %-6s\n", "COURSE NO.", "COURSE DESCRIPTION", "UNITS");
+                        for (int i = 0; i < 145; i++) System.out.print("-");
+                        System.out.println();
+                    }
+                }
+                break;
+            case 2:
+                switch (term) {
+                    case 1 -> {
+                        for (int i = 0; i < 145; i++) System.out.print("-");
+                        System.out.println("\nYear = Second Year\tTerm = First Semester ");
+                        System.out.printf("%-15s %-110s %-8s %-6s\n", "COURSE NO.", "COURSE DESCRIPTION", "UNITS");
+                        for (int i = 0; i < 145; i++) System.out.print("-");
+                        System.out.println();
+                    }
+                    case 2 -> {
+                        for (int i = 0; i < 145; i++) System.out.print("-");
+                        System.out.println("\nYear = Second Year\tTerm = Second Semester ");
+                        System.out.printf("%-15s %-110s %-8s %-6s\n", "COURSE NO.", "COURSE DESCRIPTION", "UNITS");
+                        for (int i = 0; i < 145; i++) System.out.print("-");
+                        System.out.println();
+                    }
+                    case 3 -> {
+                        for (int i = 0; i < 145; i++) System.out.print("-");
+                        System.out.println("\nYear = Second Year\tTerm = Third Semester ");
+                        System.out.printf("%-15s %-110s %-8s %-6s\n", "COURSE NO.", "COURSE DESCRIPTION", "UNITS");
+                        for (int i = 0; i < 145; i++) System.out.print("-");
+                        System.out.println();
+                    }
+                }
+                break;
+            case 3:
+                switch (term) {
+                    case 1 -> {
+                        for (int i = 0; i < 145; i++) System.out.print("-");
+                        System.out.println("\nYear = Third Year\tTerm = First Semester ");
+                        System.out.printf("%-15s %-110s %-8s %-6s\n", "COURSE NO.", "COURSE DESCRIPTION", "UNITS");
+                        for (int i = 0; i < 145; i++) System.out.print("-");
+                        System.out.println();
+                    }
+                    case 2 -> {
+                        for (int i = 0; i < 145; i++) System.out.print("-");
+                        System.out.println("\nYear = Third Year\tTerm = Second Semester ");
+                        System.out.printf("%-15s %-110s %-8s %-6s\n", "COURSE NO.", "COURSE DESCRIPTION", "UNITS");
+                        for (int i = 0; i < 145; i++) System.out.print("-");
+                        System.out.println();
+                    }
+                    case 3 -> {
+                        for (int i = 0; i < 145; i++) System.out.print("-");
+                        System.out.println("\nYear = Third Year\tTerm = Third Semester ");
+                        System.out.printf("%-15s %-110s %-8s %-6s\n", "COURSE NO.", "COURSE DESCRIPTION", "UNITS");
+                        for (int i = 0; i < 145; i++) System.out.print("-");
+                        System.out.println();
+                    }
+                }
+                break;
+            case 4:
+                switch (term) {
+                    case 1 -> {
+                        for (int i = 0; i < 145; i++) System.out.print("-");
+                        System.out.println("\nYear = Fourth Year\tTerm = First Semester ");
+                        System.out.printf("%-15s %-110s %-8s %-6s\n", "COURSE NO.", "COURSE DESCRIPTION", "UNITS");
+                        for (int i = 0; i < 145; i++) System.out.print("-");
+                        System.out.println();
+                    }
+                    case 2 -> {
+                        for (int i = 0; i < 145; i++) System.out.print("-");
+                        System.out.println("\nYear = Fourth Year\tTerm = Second Semester ");
+                        System.out.printf("%-15s %-110s %-8s %-6s\n", "COURSE NO.", "COURSE DESCRIPTION", "UNITS");
+                        for (int i = 0; i < 145; i++) System.out.print("-");
+                        System.out.println();
+                    }
+                    case 3 -> {
+                        for (int i = 0; i < 145; i++) System.out.print("-");
+                        System.out.println("\nYear = Fourth Year\tTerm = Third Semester ");
+                        System.out.printf("%-15s %-110s %-8s %-6s\n", "COURSE NO.", "COURSE DESCRIPTION", "UNITS");
+                        for (int i = 0; i < 145; i++) System.out.print("-");
+                        System.out.println();
+                    }
+                }
+                break;
+            case 5:
+                switch (term) {
+                    case 1 -> {
+                        for (int i = 0; i < 145; i++) System.out.print("-");
+                        System.out.println("\nYear = Fifth Year\tTerm = First Semester ");
+                        System.out.printf("%-15s %-110s %-8s %-6s\n", "COURSE NO.", "COURSE DESCRIPTION", "UNITS");
+                        for (int i = 0; i < 145; i++) System.out.print("-");
+                        System.out.println();
+                    }
+                    case 2 -> {
+                        for (int i = 0; i < 145; i++) System.out.print("-");
+                        System.out.println("\nYear = Fifth Year\tTerm = Second Semester ");
+                        System.out.printf("%-15s %-110s %-8s %-6s\n", "COURSE NO.", "COURSE DESCRIPTION", "UNITS");
+                        for (int i = 0; i < 145; i++) System.out.print("-");
+                        System.out.println();
+                    }
+                    case 3 -> {
+                        for (int i = 0; i < 145; i++) System.out.print("-");
+                        System.out.println("\nYear = Fifth Year\tTerm = Third Semester ");
+                        System.out.printf("%-15s %-110s %-8s %-6s\n", "COURSE NO.", "COURSE DESCRIPTION", "UNITS");
+                        for (int i = 0; i < 145; i++) System.out.print("-");
+                        System.out.println();
+                    }
+                }
+                break;
+        }
+    }
 
     /**
      * TODO: Enrico
      */
     private static void showCourses(ArrayList<Course> courseList) {
-        System.out.println("\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t      COURSES");
-        for (int i = 0; i < 145; i++) System.out.print("-");
-        System.out.printf("\n%-15s %-110s %-8s %-6s\n", "COURSE NO.", "COURSE DESCRIPTION", "UNITS", "GRADE");
-        for (Course c : courseList)
-            System.out.println(c);
+        int highestYear = 1;
+            for (Course c: courseList) {
+                if (c.getYear() > highestYear) highestYear = c.getYear();
+            }
+            System.out.println("\t\t\t\t\t\t\t\t\t\t\t\t\t\t   COURSES");
+            for (int y = 1; y <= highestYear; y++) {
+                for (int t = 1; t <= 3; t++) {
+                    displayHeader(y, t);
+                    for (Course c: courseList) {
+                        if (c.getYear() == y && c.getTerm() == t) {
+                            System.out.printf("%-15s %-110s %-8s\n", c.getCourseNumber(), c.getDescriptiveTitle(), c.getUnits());
+                        }
+                    }
+                    termBuffer();
+                }
+            }
     }
 
     /**
