@@ -82,7 +82,7 @@ public class CourseAdministration {
     /**
      * TODO: EJ
      */
-    private static void displayHeader(int year, int term) {
+    private static void displayHeaderWithGrades(int year, int term) {
         switch (year) {
             case 1:
                 switch (term) {
@@ -260,7 +260,7 @@ public class CourseAdministration {
         System.out.println("\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t      FAILED COURSES");
         for (int y = 1; y <= highestYear; y++) {
             for (int t = 1; t <= highestTerm; t++) {
-                displayHeader(y, t);
+                displayHeaderWithGrades(y, t);
                 for (Course c : courseListCopy) {
                     if (c.getYear() == y && c.getTerm() == t) {
                         if (hasFailedCourse(c)) System.out.println(c);
@@ -398,7 +398,7 @@ public class CourseAdministration {
         System.out.println("\t\t\t\t\t\t\t\t\t\t\t\t\t\t   COURSES WITH GRADES");
         for (int y = 1; y <= highestYear; y++) {
             for (int t = 1; t <= 3; t++) {
-                displayHeader(y, t);
+                displayHeaderWithGrades(y, t);
                 for (Course c : courseList) {
                     if (c.getYear() == y && c.getTerm() == t) {
                         System.out.println(c);
