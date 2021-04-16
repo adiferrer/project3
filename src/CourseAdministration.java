@@ -222,6 +222,9 @@ public class CourseAdministration {
         System.out.println();
     }
 
+    /**
+     * TODO: EJ
+     */
    private static void displayHeader(int year, int term) {
         switch (year) {
             case 1:
