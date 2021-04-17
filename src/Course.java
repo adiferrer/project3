@@ -1,5 +1,3 @@
-import java.util.Comparator;
-
 class Course implements Comparable<Course> {
     protected static final byte DEFAULT_BYTE = 0;
     protected static final double DEFAULT_DOUBLE = 0.0;
