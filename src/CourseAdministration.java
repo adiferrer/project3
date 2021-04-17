@@ -356,7 +356,13 @@ public class CourseAdministration {
     }
 
     /**
-     * TODO: Enrico
+     * This method shows the list of courses and their respective units present in the term.
+     * <p>
+     * METHOD ALGORITHM <br>
+     * 1. Gets the highest year in the curriculum data file.
+     * 2. Displays the courses for each term.
+     *
+     * @param courseList the ArrayList of courses from the BSCSCurriculumData1WithGrades.csv file
      */
     private static void showCourses(ArrayList<Course> courseList) {
         int highestYear = 1;
@@ -620,7 +626,15 @@ public class CourseAdministration {
     }
 
     /**
-     * TODO: Enrico
+     * This method sets the GPA for a specific course number.
+     * <p>
+     * METHOD ALGORITHM: <br>
+     * 1) Displays the list of courses without GPAs
+     * 2) Asks the user to input a course number from the displayed list
+     * 3) If the inputted course number is not found or null, the user is asked to input a valid input
+     * 4) Asks the user to input GPA for the selected course number.
+     *
+     * @param courseList the ArrayList of courses from the BSCSCurriculumData1WithGrades.csv file
      */
     private static void inputGrades(ArrayList<Course> courseList) {
         Course selectedCourse;
