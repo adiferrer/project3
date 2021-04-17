@@ -847,7 +847,6 @@ public class CourseAdministration {
     /**
      * TODO: Jerome
      */
-    // TODO Jerome
     public static void main(String[] args) {
         ArrayList<Course> courseList = parseCSV();
         showIntroduction();
@@ -857,7 +856,7 @@ public class CourseAdministration {
             try {
                 choice = acceptByteInput("Select an item: ");
                 if (choice < 1 || choice > 10)
-                    System.out.println("The number must be from 1 to 8.");
+                    System.out.println("The number must be from 1 to 10.");
                 switch (choice) {
                     case 1:
                         showCourses(courseList);
