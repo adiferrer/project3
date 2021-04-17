@@ -7,7 +7,10 @@ import java.util.Scanner;
 
 public class CourseAdministration {
     static BufferedReader br;
-    static Scanner keyboard = new Scanner(System.in);
+    private static final Scanner keyboard = new Scanner(System.in);
+    private static final int INT_SENTINEL_VALUE = Integer.MIN_VALUE;
+    private static final byte BYTE_SENTINEL_VALUE = Byte.MIN_VALUE;
+    private static final double DOUBLE_SENTINEL_VALUE = Double.MIN_VALUE;
 
     /**
      * TODO: EJ
@@ -59,7 +62,7 @@ public class CourseAdministration {
      * TODO: EJ
      */
     private static void saveChangesToFile(ArrayList<Course> courseList) {
-        String decision = "x";
+        String decision;
         String line;
         System.out.println("The changes will be permanent. Are you sure? Y/N");
         decision = keyboard.nextLine();
@@ -586,15 +589,41 @@ public class CourseAdministration {
     }
 
     /**
-     * TODO: Kurt
+     * @param courseList the passed ArrayList contains the courses parsed from the CSV
+     * This method displays elective courses and allows the user to edit them.
+     * METHOD ALGORITHM:
+     *     1. Display the header and elective courses
+     *     2. Prompt user if they want to edit an elective
+     *          if choice == 1, invoke the editCourse method,
+     *              then print the updated electives list
+     *          else return to main menu
      */
-    private static void showElectiveCourses(ArrayList<Course> courseList) {
-        System.out.println("\t\t\t\t\t\t\t\t\t\t\t\t\t\t   ELECTIVE COURSES");
-        for (int i = 0; i < 145; i++) System.out.print("-");
-        System.out.printf("\n%-15s %-110s %-8s %-6s\n", "COURSE NO.", "COURSE DESCRIPTION", "UNITS", "GRADE");
-        for (Course c : courseList)
-            if (c.getIsElective())
-                System.out.println(c.toString());
+    private static void manageElectiveCourses(ArrayList<Course> courseList) {
+        int choice;
+
+        do { // validates the input
+            System.out.println("\t\t\t\t\t\t\t\t\t\t\t\t\t\t   ELECTIVE COURSES");
+            for (int i = 0; i < 145; i++) System.out.print("-");
+            System.out.printf("\n%-15s %-110s %-8s %-6s\n", "COURSE NO.", "COURSE DESCRIPTION", "UNITS", "GRADE");
+            for (Course c : courseList)
+                if (c.getIsElective())
+                    System.out.println(c);
+            System.out.println("\nWhat would you like to do?\n");
+            System.out.println("1. Manage an elective course.");
+            System.out.println("2. Return to the main menu.\n");
+            choice = acceptByteInput("Select an item: ");
+            if (choice < 1 || choice > 2)
+                System.out.println("The number must be from 1 to 2.");
+            switch (choice) {
+                case 1:
+                    editCourse(courseList);
+                    break;
+                case 2:
+                    break;
+
+            }
+        } while (choice != 2);
+
     }
 
     /**
@@ -614,7 +643,14 @@ public class CourseAdministration {
     }
 
     /**
-     * TODO: Kurt
+     * @param courseList the passed ArrayList contains the courses parsed from the CSV
+     * @param searchKey a String parameter to be used for searching the ArrayList
+     * @return return a matching course, or if no course if found, return an empty Course object
+     * METHOD ALGORITHM:
+     *  1. Use a for-each loop to iterate for every Course object in the loop
+     *  2. If a course object's course number is equal to the search key, return this
+     *     course object and terminate this method
+     *  3. Else return an empty course
      */
     private static Course searchCourseList(ArrayList<Course> courseList,
                                            String searchKey) {
@@ -740,7 +776,10 @@ public class CourseAdministration {
     }
 
     /**
-     * TODO: Kurt
+     * @param message signifies the message to be displayed upon prompting the user
+     * @return a String value accepted from the keyboard
+     * METHOD DESCRIPTION: Accepts input from the keyboard, loops until user enters
+     * a valid String value
      */
     private static String acceptStringInput(String message) {
         String userInput;
@@ -769,7 +808,7 @@ public class CourseAdministration {
     }
 
     /**
-     * TODO: Kurt
+     * Outputs introductory messages to the console
      */
     private static void showIntroduction() {
         System.out.println("Welcome to the Course Administration program!");
@@ -798,6 +837,13 @@ public class CourseAdministration {
                 """);
     }
 
+    private static void searchForElectives(ArrayList<Course> courseList) {
+        for (Course course : courseList) {
+            if (course.getCourseNumber().equalsIgnoreCase("CSE"))
+                course.setIsElective(true);
+        }
+    }
+
     /**
      * TODO: Jerome
      */
@@ -822,7 +868,7 @@ public class CourseAdministration {
                         inputBuffer();
                         break;
                     case 3:
-                        showElectiveCourses(courseList);
+                        manageElectiveCourses(courseList);
                         inputBuffer();
                         break;
                     case 4:
@@ -834,6 +880,7 @@ public class CourseAdministration {
                         inputBuffer();
                         break;
                     case 6:
+                        showCourses(courseList);
                         editCourse(courseList);
                         inputBuffer();
                         break;
