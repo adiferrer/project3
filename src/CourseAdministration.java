@@ -2,7 +2,10 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+<<<<<<< HEAD
 import java.util.Comparator;
+=======
+>>>>>>> xx
 import java.util.Scanner;
 
 public class CourseAdministration {
