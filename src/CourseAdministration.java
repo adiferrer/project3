@@ -567,8 +567,13 @@ public class CourseAdministration {
     }
 
     /**
-     * TODO: Jerome
-     */
+     * METHOD ALGORITHM: <br>
+     * 1. Return true if the grade of the course if the grade is less than <br>
+     * 75 and if the grade is not equal to 0 (the grade is 0 if the grade has not been registered).
+     *
+     * @return true if the course has a failing grade.
+     * @param course receives the Course instance
+    */
     private static boolean hasFailedCourse(Course course) {
         return course.getGrades() < 75 && course.getGrades() != 0;
     }
@@ -785,8 +790,16 @@ public class CourseAdministration {
     }
 
     /**
-     * TODO: Jerome
-     */
+     * METHOD ALGORITHM:
+     * 1. Initialize variable input to hold the value registered by the user
+     * 2. While true
+     * 2.1 Accept an input from the user
+     * 2.2 If input is not equal to -1, return input
+     * 2.3 Catch necessary exceptions
+     *
+     * @return an integer input.
+     *  @param message message prompt
+    */
     private static int acceptIntegerInput(String message) {
         int input = -1;
         while (true) {
