@@ -424,12 +424,21 @@ public class CourseAdministration {
     }
 
     /**
-     * TODO: Andre
+     * This method essentially functions in the same way as the parseCSV method, but this
+     * method opens a different CSV file which contains the shifter's data to be used in the
+     * shifter methods.
+     *
+     * METHOD ALGORITHM:
+     * 1. Create a new ArrayList
+     * 2. Open the shifterData CSV file with FileReader
+     * 3. Splits each value separated by commas
+     * 4. Processes each value to be in line with the Course constructor
+     * 5. Adds said course to the ArrayList
      */
-    // TODO Andre
     protected static ArrayList<Course> parseShifterCSV() {
         ArrayList<Course> shifterCourseList = new ArrayList<>();
         String l;
+        
         try {
             br = new BufferedReader(new FileReader("ShifterData.csv"));
             br.readLine();
@@ -454,7 +463,17 @@ public class CourseAdministration {
     }
 
     /**
-     * TODO: Andre
+     * This method is in charge of handling the course shift; it uses the shifter's data and
+     * compares it to the main curriculum data, transferring the shifter's data and course number
+     * over to their respective equivalent courses.
+     * 
+     * METHOD ALGORITHM:
+     * 1. Compares each course in the Shifter's ArrayList and the original curriculum ArrayList
+     * 2. If the course descriptions are the same (by comparing the descriptive titles)
+     *      Changes the original course number into the shifter's course number
+     *      Sets the original course grade to the shifter's course grade
+     * 3. Shows the shifter's courses that had equivalents
+     * 4. Shows the shifter's courses that did not have an equivalent
      */
     private static void shiftCourse(ArrayList<Course> courseList) {
         ArrayList<Course> shifterCourseList = parseShifterCSV();
@@ -473,15 +492,17 @@ public class CourseAdministration {
             for (Course c : courseList) {
                 if ((sC.getDescriptiveTitle()).compareToIgnoreCase(c.getDescriptiveTitle()) == 0) {
                     c.setGrades(sC.getGrades());
+                    c.setCourseNumber(sC.getCourseNumber());
                     break;
                 }
             }
         }
+        
         System.out.println();
         System.out.print("YOUR COURSES");
         showShifterCourses(shifterCourseList);
 
-        showUncarriedCourses(courseList, shifterCourseList);
+        uncarriedCourses(courseList, shifterCourseList);
 
         System.out.println();
         System.out.print("You have successfully shifted courses!\n");
@@ -489,7 +510,12 @@ public class CourseAdministration {
     }
 
     /**
-     * TODO: Andre
+     * This method is a very barebones way of displaying each course in the courseList; to
+     * be used in the shifter methods.
+     * 
+     * METHOD ALGORITHM
+     * 1. For each course in the course ArrayList
+     *      Print said course into string
      */
     private static void showShifterCourses(ArrayList<Course> shifterCourseList) {
         System.out.printf("\n%-15s %-110s %-8s %-6s\n", "COURSE NO.", "COURSE DESCRIPTION", "UNITS", "GRADE");
@@ -499,9 +525,20 @@ public class CourseAdministration {
     }
 
     /**
-     * TODO: Andre
+     * This method sorts out the courses with no equivalents, removing courses with
+     * equivalents from the original shifter's ArrayList. This method is also in charge of
+     * adding the uncarried courses to the main course ArrayList.
+     * 
+     * METHOD ALGORITHM
+     * 1. Compares each course in the Shifter's ArrayList and the original curriculum ArrayList
+     * 2. If the descriptive titles are the same
+     *      Removes the shifter course from the shifter's ArrayList
+     * 3. Shows a list of the uncarried courses
+     * 4. Adds the uncarried course to the main curriculum ArrayList
+     *      Adds a prefix * to the course name
+     *      Sets the units of the course to 0
      */
-    private static void showUncarriedCourses(ArrayList<Course> courseList, ArrayList<Course> shifterCourseList) {
+    private static void uncarriedCourses(ArrayList<Course> courseList, ArrayList<Course> shifterCourseList) {
         int prevSize;
         int curSize = 0;
 
@@ -521,6 +558,12 @@ public class CourseAdministration {
         System.out.println();
         System.out.print("UNCARRIED COURSES");
         showShifterCourses(shifterCourseList);
+        
+        for (Course sC : shifterCourseList) {
+            sC.setCourseNumber("*" + sC.getCourseNumber());
+            sC.setUnits(0);
+            courseList.add(sC);
+        }
     }
 
     /**
