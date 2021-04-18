@@ -27,11 +27,11 @@ public class CourseAdministration {
      * 3.3. Values will then be added using the different input methods <br>
      * 3.4. It then adds it to the array of data to the list.
      */
-    protected static ArrayList<Course> parseCSV() {
+    protected static ArrayList<Course> parseCSV(String fileName) {
         ArrayList<Course> courseList = new ArrayList<>();
         String line;
         try {
-            br = new BufferedReader(new FileReader("BSCSCurriculumData1WithGradesCopy.csv"));
+            br = new BufferedReader(new FileReader(fileName));
             br.readLine();
             while ((line = br.readLine()) != null) {
                 // Split on comma
@@ -47,6 +47,7 @@ public class CourseAdministration {
                 courseTemp.setUnits(Double.parseDouble(courseCSV[4]));
                 if (courseCSV[5].equals("")) courseTemp.setGrades(0);
                 else courseTemp.setGrades(Double.parseDouble(courseCSV[5]));
+
                 courseList.add(courseTemp);
             }
         } catch (FileNotFoundException fileNotFoundException) {
@@ -407,7 +408,7 @@ public class CourseAdministration {
      * This method shows the list of courses and their respective units present in the term.
      * <p>
      * METHOD ALGORITHM <br>
-     * 1. Gets the highest year in the curriculum data file.
+     * 1. Gets the highest year in the curriculum data file. <br>
      * 2. Displays the courses for each term.
      *
      * @param courseList the ArrayList of courses from the BSCSCurriculumData1WithGrades.csv file
@@ -472,18 +473,20 @@ public class CourseAdministration {
      * This method essentially functions in the same way as the parseCSV method, but this
      * method opens a different CSV file which contains the shifter's data to be used in the
      * shifter methods.
-     *
-     * METHOD ALGORITHM:
-     * 1. Create a new ArrayList
-     * 2. Open the shifterData CSV file with FileReader
-     * 3. Splits each value separated by commas
-     * 4. Processes each value to be in line with the Course constructor
+     * <p>
+     * METHOD ALGORITHM: <br>
+     * 1. Create a new ArrayList <br>
+     * 2. Open the shifterData CSV file with FileReader <br>
+     * 3. Splits each value separated by commas <br>
+     * 4. Processes each value to be in line with the Course constructor <br>
      * 5. Adds said course to the ArrayList
+     *
+     * @return an ArrayList of Courses from another curriculum
      */
     protected static ArrayList<Course> parseShifterCSV() {
         ArrayList<Course> shifterCourseList = new ArrayList<>();
         String l;
-        
+
         try {
             br = new BufferedReader(new FileReader("ShifterData.csv"));
             br.readLine();
@@ -511,17 +514,19 @@ public class CourseAdministration {
      * This method is in charge of handling the course shift; it uses the shifter's data and
      * compares it to the main curriculum data, transferring the shifter's data and course number
      * over to their respective equivalent courses.
-     * 
-     * METHOD ALGORITHM:
-     * 1. Compares each course in the Shifter's ArrayList and the original curriculum ArrayList
-     * 2. If the course descriptions are the same (by comparing the descriptive titles)
-     *      Changes the original course number into the shifter's course number
-     *      Sets the original course grade to the shifter's course grade
-     * 3. Shows the shifter's courses that had equivalents
+     * <p>
+     * METHOD ALGORITHM: <br>
+     * 1. Compares each course in the Shifter's ArrayList and the original curriculum ArrayList <br>
+     * 2. If the course descriptions are the same (by comparing the descriptive titles) <br>
+     * Changes the original course number into the shifter's course number <br>
+     * Sets the original course grade to the shifter's course grade <br>
+     * 3. Shows the shifter's courses that had equivalents <br>
      * 4. Shows the shifter's courses that did not have an equivalent
+     *
+     * @param courseList the ArrayList of courses from the BSCSCurriculumData1WithGrades.csv file
      */
     private static void shiftCourse(ArrayList<Course> courseList) {
-        ArrayList<Course> shifterCourseList = parseShifterCSV();
+        ArrayList<Course> shifterCourseList = parseCSV("ShifterData.csv");
         char shiftChoice;
 
         System.out.print("Are you sure you want to shift courses?(y/n): ");
@@ -542,7 +547,7 @@ public class CourseAdministration {
                 }
             }
         }
-        
+
         System.out.println();
         System.out.print("YOUR COURSES");
         showShifterCourses(shifterCourseList);
@@ -550,17 +555,19 @@ public class CourseAdministration {
         uncarriedCourses(courseList, shifterCourseList);
 
         System.out.println();
-        System.out.print("You have successfully shifted courses!\n");
+        System.out.print("You have successfully shifted courses!");
         System.out.println();
     }
 
     /**
      * This method is a very barebones way of displaying each course in the courseList; to
      * be used in the shifter methods.
-     * 
-     * METHOD ALGORITHM
-     * 1. For each course in the course ArrayList
-     *      Print said course into string
+     * <p>
+     * METHOD ALGORITHM <br>
+     * 1. For each course in the course ArrayList <br>
+     * Print said course into string
+     *
+     * @param shifterCourseList the ArrayList of courses from the ShifterData.csv file
      */
     private static void showShifterCourses(ArrayList<Course> shifterCourseList) {
         System.out.printf("\n%-15s %-110s %-8s %-6s\n", "COURSE NO.", "COURSE DESCRIPTION", "UNITS", "GRADE");
@@ -573,15 +580,18 @@ public class CourseAdministration {
      * This method sorts out the courses with no equivalents, removing courses with
      * equivalents from the original shifter's ArrayList. This method is also in charge of
      * adding the uncarried courses to the main course ArrayList.
-     * 
-     * METHOD ALGORITHM
-     * 1. Compares each course in the Shifter's ArrayList and the original curriculum ArrayList
-     * 2. If the descriptive titles are the same
-     *      Removes the shifter course from the shifter's ArrayList
-     * 3. Shows a list of the uncarried courses
-     * 4. Adds the uncarried course to the main curriculum ArrayList
-     *      Adds a prefix * to the course name
-     *      Sets the units of the course to 0
+     * <p>
+     * METHOD ALGORITHM <br>
+     * 1. Compares each course in the Shifter's ArrayList and the original curriculum ArrayList <br>
+     * 2. If the descriptive titles are the same <br>
+     * Removes the shifter course from the shifter's ArrayList <br>
+     * 3. Shows a list of the uncarried courses <br>
+     * 4. Adds the uncarried course to the main curriculum ArrayList <br>
+     * Adds a prefix to the course name <br>
+     * Sets the units of the course to 0
+     *
+     * @param shifterCourseList the ArrayList of courses from the ShifterData.csv file
+     * @param courseList        the ArrayList of courses from the BSCSCurriculumData1WithGrades.csv file
      */
     private static void uncarriedCourses(ArrayList<Course> courseList, ArrayList<Course> shifterCourseList) {
         int prevSize;
@@ -603,7 +613,7 @@ public class CourseAdministration {
         System.out.println();
         System.out.print("UNCARRIED COURSES");
         showShifterCourses(shifterCourseList);
-        
+
         for (Course sC : shifterCourseList) {
             sC.setCourseNumber("*" + sC.getCourseNumber());
             sC.setUnits(0);
@@ -758,10 +768,10 @@ public class CourseAdministration {
      * This method sets the GPA for a specific course number.
      * <p>
      * METHOD ALGORITHM: <br>
-     * 1) Displays the list of courses without GPAs
-     * 2) Asks the user to input a course number from the displayed list
-     * 3) If the inputted course number is not found or null, the user is asked to input a valid input
-     * 4) Asks the user to input GPA for the selected course number.
+     * 1) Displays the list of courses without GPAs <br>
+     * 2) Asks the user to input a course number from the displayed list <br>
+     * 3) If the inputted course number is not found or null, the user is asked to input a valid input <br>
+     * 4) Asks the user to input GPA for the selected course number. <br>
      *
      * @param courseList the ArrayList of courses from the BSCSCurriculumData1WithGrades.csv file
      */
@@ -796,7 +806,6 @@ public class CourseAdministration {
         String searchKey;
 
         do {
-            showCourses(courseList);
             searchKey = acceptStringInput("Enter course number to be changed (ex. CS 122): ");
             courseToBeChanged = searchCourseList(courseList, searchKey);
             if (courseToBeChanged.getCourseNumber().equals(""))
@@ -818,7 +827,16 @@ public class CourseAdministration {
     }
 
     /**
-     * TODO: EJ
+     * This method helps accept a variable with the byte data type.
+     * <p>
+     * METHOD DESCRIPTION: <br>
+     * Accepts the input given by the user within the
+     * range of the byte data type. The method is
+     * enclosed in a loop and will continue till the
+     * user either enters a valid input or hits an error.
+     *
+     * @param message message prompt
+     * @return the valid byte input to be used
      */
     private static byte acceptByteInput(String message) {
         byte input = -1;
@@ -860,7 +878,16 @@ public class CourseAdministration {
     }
 
     /**
-     * TODO: EJ
+     * This method helps accept a variable with the double data type.
+     * <p>
+     * METHOD DESCRIPTION: <br>
+     * Accepts the input given by the user within the
+     * range of the double data type. The method is
+     * enclosed in a loop and will continue till the
+     * user either enters a valid input or hits an error.
+     *
+     * @param message message prompt
+     * @return a double input
      */
     private static double acceptDoubleInput(String message) {
         Double input = -1.0;
@@ -877,10 +904,10 @@ public class CourseAdministration {
     }
 
     /**
-     * @param message signifies the message to be displayed upon prompting the user
-     * @return a String value accepted from the keyboard
      * METHOD DESCRIPTION: Accepts input from the keyboard, loops until user enters
      * a valid String value
+     * @param message signifies the message to be displayed upon prompting the user
+     * @return a String value accepted from the keyboard
      */
     private static String acceptStringInput(String message) {
         String userInput;
@@ -892,7 +919,7 @@ public class CourseAdministration {
     }
 
     /**
-     * TODO: EJ
+     * Serves as buffer in between operations.
      */
     private static void inputBuffer() {
         System.out.println();
@@ -918,7 +945,8 @@ public class CourseAdministration {
     }
 
     /**
-     * TODO: EJ
+     * Displays the current main menu of the program.
+     * Displays what the program is able to do and with further added functions.
      */
     private static void showMenu() {
         System.out.println("""
@@ -949,7 +977,8 @@ public class CourseAdministration {
      * TODO: Jerome
      */
     public static void main(String[] args) {
-        ArrayList<Course> courseList = parseCSV();
+        ArrayList<Course> courseList = parseCSV("BSCSCurriculumData1WithGradesCopy.csv");
+        searchForElectives(courseList);
         showIntroduction();
         byte choice = 0;
         do { // validates the input
@@ -969,7 +998,6 @@ public class CourseAdministration {
                         break;
                     case 3:
                         manageElectiveCourses(courseList);
-                        inputBuffer();
                         break;
                     case 4:
                         showFailedCourses(courseList);
