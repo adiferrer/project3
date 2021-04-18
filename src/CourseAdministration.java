@@ -13,7 +13,19 @@ public class CourseAdministration {
     private static final double DOUBLE_SENTINEL_VALUE = Double.MIN_VALUE;
 
     /**
-     * TODO: EJ
+     * This method allows the creation of the Array list with its data retrieved from
+     * a cvs file.
+     * <p>
+     * METHOD ALGORITHM: <br>
+     * 1. The method first creates a new Array List named courseList. <br>
+     * 2. Encased in a try and catch a new buffered reader is created
+     * to read the cvs file. <br>
+     * 3. Also within the try and catch a while loop is located for the
+     * construction of the arrays. <br>
+     * 3.1. Firstly It splits the cvs file on comma using a line.split <br>
+     * 3.2. It then constructs the a new course file for the input of values. <br>
+     * 3.3. Values will then be added using the different input methods <br>
+     * 3.4. It then adds it to the array of data to the list.
      */
     protected static ArrayList<Course> parseCSV() {
         ArrayList<Course> courseList = new ArrayList<>();
@@ -46,7 +58,10 @@ public class CourseAdministration {
     }
 
     /**
-     * TODO: EJ
+     * This method allows the construction of the array.
+     *
+     * @param csvLine the String read by the BufferedReader
+     * @return an array of Strings containing data for a Course object
      */
     private static String[] buildArray(String[] csvLine) {
         ArrayList<String> courseInfo = new ArrayList<>(Arrays.asList(csvLine));
@@ -59,7 +74,18 @@ public class CourseAdministration {
     }
 
     /**
-     * TODO: EJ
+     * This method allows the user to save the changes made to the file.
+     * <p>
+     * METHOD ALGORITHM: <br>
+     * 1. The method asks the user whether or not to permanently change
+     * the file. <br>
+     * 2. If the user inputs Y for yes. <br>
+     * 2.1. The file will go through a for loop to print out the list. <br>
+     * 2.2. Then gets overwritten by a writer. <br>
+     * 3. If the user inputs otherwise a message prompt will appear saying
+     * the changes have not been saved.
+     *
+     * @param courseList the ArrayList of courses from the BSCSCurriculumData1WithGrades.csv file
      */
     private static void saveChangesToFile(ArrayList<Course> courseList) {
         String decision;
@@ -83,7 +109,16 @@ public class CourseAdministration {
     }
 
     /**
-     * TODO: EJ
+     * This method displays the header for its specific year and term which includes grade.
+     * <p>
+     * METHOD ALGORITHM: <br>
+     * 1. Accepts the specified year and term. <br>
+     * 2. It goes through a first switch expression to determine the year level. <br>
+     * 3. It then goes to a second switch expression to determine the term. <br>
+     * 4. It then displays the header for the specified year and term.
+     *
+     * @param year the year that a certain set of courses are in
+     * @param term the term that a certain set of courses are in
      */
     private static void displayHeaderWithGrades(int year, int term) {
         switch (year) {
@@ -216,7 +251,7 @@ public class CourseAdministration {
     }
 
     /**
-     * TODO: EJ
+     * Serves as a buffer in between operations.
      */
     private static void termBuffer() {
         System.out.println();
@@ -226,7 +261,17 @@ public class CourseAdministration {
     }
 
     /**
-     * TODO: EJ
+     * This method displays the header for its specific year and term
+     * which does not include grades.
+     * <p>
+     * METHOD ALGORITHM: <br>
+     * 1. Accepts the specified year and term. <br>
+     * 2. It goes through a first switch expression to determine the year level. <br>
+     * 3. It then goes to a second switch expression to determine the term. <br>
+     * 4. It then displays the header for the specified year and term.
+     *
+     * @param year the year that a certain set of courses are in
+     * @param term the term that a certain set of courses are in
      */
     private static void displayHeader(int year, int term) {
         switch (year) {
@@ -369,21 +414,21 @@ public class CourseAdministration {
      */
     private static void showCourses(ArrayList<Course> courseList) {
         int highestYear = 1;
-            for (Course c: courseList) {
-                if (c.getYear() > highestYear) highestYear = c.getYear();
-            }
-            System.out.println("\t\t\t\t\t\t\t\t\t\t\t\t\t\t   COURSES");
-            for (int y = 1; y <= highestYear; y++) {
-                for (int t = 1; t <= 3; t++) {
-                    displayHeader(y, t);
-                    for (Course c: courseList) {
-                        if (c.getYear() == y && c.getTerm() == t) {
-                            System.out.printf("%-15s %-110s %-8s\n", c.getCourseNumber(), c.getDescriptiveTitle(), c.getUnits());
-                        }
+        for (Course c : courseList) {
+            if (c.getYear() > highestYear) highestYear = c.getYear();
+        }
+        System.out.println("\t\t\t\t\t\t\t\t\t\t\t\t\t\t   COURSES");
+        for (int y = 1; y <= highestYear; y++) {
+            for (int t = 1; t <= 3; t++) {
+                displayHeader(y, t);
+                for (Course c : courseList) {
+                    if (c.getYear() == y && c.getTerm() == t) {
+                        System.out.printf("%-15s %-110s %-8s\n", c.getCourseNumber(), c.getDescriptiveTitle(), c.getUnits());
                     }
-                    termBuffer();
                 }
+                termBuffer();
             }
+        }
     }
 
     /**
@@ -571,9 +616,9 @@ public class CourseAdministration {
      * 1. Return true if the grade of the course if the grade is less than <br>
      * 75 and if the grade is not equal to 0 (the grade is 0 if the grade has not been registered).
      *
-     * @return true if the course has a failing grade.
      * @param course receives the Course instance
-    */
+     * @return true if the course has a failing grade.
+     */
     private static boolean hasFailedCourse(Course course) {
         return course.getGrades() < 75 && course.getGrades() != 0;
     }
@@ -616,7 +661,7 @@ public class CourseAdministration {
      * Else, return an ArrayList of courses with GPAs in descending order.
      *
      * @param courseList the ArrayList of courses from the BSCSCurriculumData1WithGrades.csv file
-     * @param aOrD the choice indicating if the ArrayList should be sorted in descending or ascending order
+     * @param aOrD       the choice indicating if the ArrayList should be sorted in descending or ascending order
      * @return an ArrayList of sorted courses with GPA
      */
     private static ArrayList<Course> sortCoursesByGPA(ArrayList<Course> courseList, int aOrD) {
@@ -638,13 +683,13 @@ public class CourseAdministration {
 
     /**
      * @param courseList the passed ArrayList contains the courses parsed from the CSV
-     * This method displays elective courses and allows the user to edit them.
-     * METHOD ALGORITHM:
-     *     1. Display the header and elective courses
-     *     2. Prompt user if they want to edit an elective
-     *          if choice == 1, invoke the editCourse method,
-     *              then print the updated electives list
-     *          else return to main menu
+     *                   This method displays elective courses and allows the user to edit them.
+     *                   METHOD ALGORITHM:
+     *                   1. Display the header and elective courses
+     *                   2. Prompt user if they want to edit an elective
+     *                   if choice == 1, invoke the editCourse method,
+     *                   then print the updated electives list
+     *                   else return to main menu
      */
     private static void manageElectiveCourses(ArrayList<Course> courseList) {
         int choice;
@@ -692,13 +737,13 @@ public class CourseAdministration {
 
     /**
      * @param courseList the passed ArrayList contains the courses parsed from the CSV
-     * @param searchKey a String parameter to be used for searching the ArrayList
+     * @param searchKey  a String parameter to be used for searching the ArrayList
      * @return return a matching course, or if no course if found, return an empty Course object
      * METHOD ALGORITHM:
-     *  1. Use a for-each loop to iterate for every Course object in the loop
-     *  2. If a course object's course number is equal to the search key, return this
-     *     course object and terminate this method
-     *  3. Else return an empty course
+     * 1. Use a for-each loop to iterate for every Course object in the loop
+     * 2. If a course object's course number is equal to the search key, return this
+     * course object and terminate this method
+     * 3. Else return an empty course
      */
     private static Course searchCourseList(ArrayList<Course> courseList,
                                            String searchKey) {
@@ -797,9 +842,9 @@ public class CourseAdministration {
      * 2.2 If input is not equal to -1, return input
      * 2.3 Catch necessary exceptions
      *
+     * @param message message prompt
      * @return an integer input.
-     *  @param message message prompt
-    */
+     */
     private static int acceptIntegerInput(String message) {
         int input = -1;
         while (true) {
