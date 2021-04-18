@@ -27,11 +27,11 @@ public class CourseAdministration {
      * 3.3. Values will then be added using the different input methods <br>
      * 3.4. It then adds it to the array of data to the list.
      */
-    protected static ArrayList<Course> parseCSV() {
+    protected static ArrayList<Course> parseCSV(String fileName) {
         ArrayList<Course> courseList = new ArrayList<>();
         String line;
         try {
-            br = new BufferedReader(new FileReader("BSCSCurriculumData1WithGradesCopy.csv"));
+            br = new BufferedReader(new FileReader(fileName));
             br.readLine();
             while ((line = br.readLine()) != null) {
                 // Split on comma
@@ -47,6 +47,7 @@ public class CourseAdministration {
                 courseTemp.setUnits(Double.parseDouble(courseCSV[4]));
                 if (courseCSV[5].equals("")) courseTemp.setGrades(0);
                 else courseTemp.setGrades(Double.parseDouble(courseCSV[5]));
+
                 courseList.add(courseTemp);
             }
         } catch (FileNotFoundException fileNotFoundException) {
@@ -525,7 +526,7 @@ public class CourseAdministration {
      * @param courseList the ArrayList of courses from the BSCSCurriculumData1WithGrades.csv file
      */
     private static void shiftCourse(ArrayList<Course> courseList) {
-        ArrayList<Course> shifterCourseList = parseShifterCSV();
+        ArrayList<Course> shifterCourseList = parseCSV("ShifterData.csv");
         char shiftChoice;
 
         System.out.print("Are you sure you want to shift courses?(y/n): ");
@@ -554,7 +555,7 @@ public class CourseAdministration {
         uncarriedCourses(courseList, shifterCourseList);
 
         System.out.println();
-        System.out.print("You have successfully shifted courses!\n");
+        System.out.print("You have successfully shifted courses!");
         System.out.println();
     }
 
@@ -805,7 +806,6 @@ public class CourseAdministration {
         String searchKey;
 
         do {
-            showCourses(courseList);
             searchKey = acceptStringInput("Enter course number to be changed (ex. CS 122): ");
             courseToBeChanged = searchCourseList(courseList, searchKey);
             if (courseToBeChanged.getCourseNumber().equals(""))
@@ -977,7 +977,8 @@ public class CourseAdministration {
      * TODO: Jerome
      */
     public static void main(String[] args) {
-        ArrayList<Course> courseList = parseCSV();
+        ArrayList<Course> courseList = parseCSV("BSCSCurriculumData1WithGradesCopy.csv");
+        searchForElectives(courseList);
         showIntroduction();
         byte choice = 0;
         do { // validates the input
@@ -997,7 +998,6 @@ public class CourseAdministration {
                         break;
                     case 3:
                         manageElectiveCourses(courseList);
-                        inputBuffer();
                         break;
                     case 4:
                         showFailedCourses(courseList);
