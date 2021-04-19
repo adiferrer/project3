@@ -467,7 +467,7 @@ public class CourseAdministration {
         System.out.println("\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t      FAILED COURSES");
         for (int i = 0; i < 145; i++) System.out.print("-");
         System.out.printf("\n%-15s %-110s %-8s %-6s\n", "COURSE NO.", "COURSE DESCRIPTION", "UNITS", "GRADE");
-        for(Course c : courseListCopyFail) System.out.println(c);
+        for (Course c : courseListCopyFail) System.out.println(c);
     }
 
     /**
@@ -907,6 +907,7 @@ public class CourseAdministration {
     /**
      * METHOD DESCRIPTION: Accepts input from the keyboard, loops until user enters
      * a valid String value
+     *
      * @param message signifies the message to be displayed upon prompting the user
      * @return a String value accepted from the keyboard
      */
@@ -975,7 +976,31 @@ public class CourseAdministration {
     }
 
     /**
-     * TODO: Jerome
+     * Main Method.
+     * <p>
+     * METHOD ALGORITHM: <br>
+     * 1. Initialize variable courseList to hold CSV. <br>
+     * 2. Invoke showIntroduction to display introductory message. <br>
+     * 3. Initialize variable choice. <br>
+     * 4. Insert do while loop to validate the input <br>
+     * 5. do <br>
+     * 5.1 Invoke showMenu to display the choices available. <br>
+     * 5.2 Accept the input from the user for the variable choice. <br>
+     * 5.3 If choice is less than 1 or choice is greater than 10, Display a message <br>
+     * 5.4 Insert a switch case statement <br>
+     * case 1: Invoke showCourses method <br>
+     * case 2: Invoke showCoursesWithGrades method <br>
+     * case 3: Invoke showElectiveCourses method <br>
+     * case 4: Invoke showFailedCourses method <br>
+     * case 5: Invoke inputGrades method <br>
+     * case 6: Invoke editCourse method <br>
+     * case 7: Invoke shiftCourse method <br>
+     * case 8: Invoke saveChangesToFile method <br>
+     * case 9: Invoke aboutTheDevelopers method <br>
+     * 5.5 Catch necessary exceptions <br>
+     * while choice is not equal to 10
+     *
+     * @param args command line argument
      */
     public static void main(String[] args) {
         ArrayList<Course> courseList = parseCSV("BSCSCurriculumData1WithGrades.csv");
