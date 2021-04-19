@@ -112,6 +112,7 @@ public class CourseAdministration {
                 outputWriter.close();
 
                 PrintWriter outputWriter2 = new PrintWriter(new FileWriter("BSCSCurriculumData1WithGradesTabularCopy.txt"));
+                outputWriter2.printf("%-15s %-110s %-8s %-6s\n", "COURSE NO.", "COURSE DESCRIPTION", "UNITS", "GRADE");
                 for (int i = 0; i < courseList.size(); i++) outputWriter2.println(courseList.get(i));
                 outputWriter2.close();
             } catch (IOException ioException) {
