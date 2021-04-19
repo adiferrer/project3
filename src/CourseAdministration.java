@@ -693,14 +693,15 @@ public class CourseAdministration {
     }
 
     /**
+     * METHOD ALGORITHM: <br>
+     * 1. Display the header and elective courses <br>
+     * 2. Prompt user if they want to edit an elective <br>
+     * if choice == 1, invoke the editCourse method,
+     * then print the updated electives list <br>
+     * else return to main menu <br>
+     *
      * @param courseList the passed ArrayList contains the courses parsed from the CSV
      *                   This method displays elective courses and allows the user to edit them.
-     *                   METHOD ALGORITHM:
-     *                   1. Display the header and elective courses
-     *                   2. Prompt user if they want to edit an elective
-     *                   if choice == 1, invoke the editCourse method,
-     *                   then print the updated electives list
-     *                   else return to main menu
      */
     private static void manageElectiveCourses(ArrayList<Course> courseList) {
         int choice;
@@ -747,14 +748,15 @@ public class CourseAdministration {
     }
 
     /**
+     * METHOD ALGORITHM: <br>
+     * 1. Use a for-each loop to iterate for every Course object in the loop <br>
+     * 2. If a course object's course number is equal to the search key, return this <br>
+     * course object and terminate this method <br>
+     * 3. Else return an empty course
+     *
      * @param courseList the passed ArrayList contains the courses parsed from the CSV
      * @param searchKey  a String parameter to be used for searching the ArrayList
      * @return return a matching course, or if no course if found, return an empty Course object
-     * METHOD ALGORITHM:
-     * 1. Use a for-each loop to iterate for every Course object in the loop
-     * 2. If a course object's course number is equal to the search key, return this
-     * course object and terminate this method
-     * 3. Else return an empty course
      */
     private static Course searchCourseList(ArrayList<Course> courseList,
                                            String searchKey) {
@@ -854,11 +856,11 @@ public class CourseAdministration {
     }
 
     /**
-     * METHOD ALGORITHM:
-     * 1. Initialize variable input to hold the value registered by the user
-     * 2. While true
-     * 2.1 Accept an input from the user
-     * 2.2 If input is not equal to -1, return input
+     * METHOD ALGORITHM: <br>
+     * 1. Initialize variable input to hold the value registered by the user <br>
+     * 2. While true <br>
+     * 2.1 Accept an input from the user <br>
+     * 2.2 If input is not equal to -1, return input <br>
      * 2.3 Catch necessary exceptions
      *
      * @param message message prompt
@@ -931,8 +933,10 @@ public class CourseAdministration {
     }
 
     // TODO ADI AND KURT
-    // Displays the contributions of each member
-    // When invoked through the main menu
+
+    /**
+     * Displays the contributions of each member when invoked through the main menu
+     */
     private static void aboutTheDevelopers() {
 
     }
