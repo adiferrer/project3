@@ -2,10 +2,6 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-<<<<<<< HEAD
-import java.util.Comparator;
-=======
->>>>>>> xx
 import java.util.Scanner;
 
 public class CourseAdministration {
@@ -102,8 +98,22 @@ public class CourseAdministration {
 
                 PrintWriter outputWriter =
                         new PrintWriter(new FileWriter("BSCSCurriculumData1WithGradesCopy.csv"));
-                for (int i = 0; i < courseList.size(); i++) outputWriter.println(courseList.get(i));
+                for (int i = 0; i < courseList.size(); i++) {
+                    if (courseList.get(i).getGrades() == 0)
+                        outputWriter.println(courseList.get(i).getYear() + "," + courseList.get(i).getTerm() + "," +
+                                courseList.get(i).getCourseNumber() + "," + courseList.get(i).getDescriptiveTitle() +
+                                "," + courseList.get(i).getUnits() + ",");
+                    else
+                        outputWriter.println(courseList.get(i).getYear() + "," + courseList.get(i).getTerm() + "," +
+                                courseList.get(i).getCourseNumber() + "," + courseList.get(i).getDescriptiveTitle() +
+                                "," + courseList.get(i).getUnits() + "," + courseList.get(i).getGrades());
+                }
+
                 outputWriter.close();
+
+                PrintWriter outputWriter2 = new PrintWriter(new FileWriter("BSCSCurriculumData1WithGradesTabularCopy.csv"));
+                for (int i = 0; i < courseList.size(); i++) outputWriter2.println(courseList.get(i));
+                outputWriter2.close();
             } catch (IOException ioException) {
                 System.out.println("I/O error: " + ioException);
             }
@@ -259,7 +269,7 @@ public class CourseAdministration {
      */
     private static void termBuffer() {
         System.out.println();
-        System.out.print("Press enter key to see courses for the next term.");
+        System.out.print("Press enter key to see courses for the next term...");
         keyboard.nextLine();
         System.out.println();
     }
@@ -446,30 +456,17 @@ public class CourseAdministration {
      * @param courseList the ArrayList of courses from the BSCSCurriculumData1WithGrades.csv file
      */
     private static void showFailedCourses(ArrayList<Course> courseList) {
-        ArrayList<Course> courseListCopy = new ArrayList<Course>();
-        int highestYear = 1, highestTerm = 1;
+        ArrayList<Course> courseListCopyFail = new ArrayList<Course>();
         for (Course c : courseList) {
-            if (c.getGrades() != 0) {
-                highestYear = c.getYear();
-                highestTerm = c.getTerm();
-                courseListCopy.add(c);
+            if (c.getGrades() != 0 && hasFailedCourse(c)) {
+                courseListCopyFail.add(c);
             }
         }
 
         System.out.println("\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t      FAILED COURSES");
-        for (int y = 1; y <= highestYear; y++) {
-            for (int t = 1; t <= highestTerm; t++) {
-                displayHeaderWithGrades(y, t);
-                for (Course c : courseListCopy) {
-                    if (c.getYear() == y && c.getTerm() == t) {
-                        if (hasFailedCourse(c)) System.out.println(c);
-                    } else {
-                        termBuffer();
-                        break;
-                    }
-                }
-            }
-        }
+        for (int i = 0; i < 145; i++) System.out.print("-");
+        System.out.printf("\n%-15s %-110s %-8s %-6s\n", "COURSE NO.", "COURSE DESCRIPTION", "UNITS", "GRADE");
+        for(Course c : courseListCopyFail) System.out.println(c);
     }
 
     /**
@@ -980,7 +977,7 @@ public class CourseAdministration {
      * TODO: Jerome
      */
     public static void main(String[] args) {
-        ArrayList<Course> courseList = parseCSV("BSCSCurriculumData1WithGradesCopy.csv");
+        ArrayList<Course> courseList = parseCSV("BSCSCurriculumData1WithGrades.csv");
         searchForElectives(courseList);
         showIntroduction();
         byte choice = 0;

@@ -3,7 +3,7 @@ class Course implements Comparable<Course> {
     protected static final double DEFAULT_DOUBLE = 0.0;
     protected static final String DEFAULT_STRING = "";
     private String courseNumber, descriptiveTitle;
-    private byte term, year; //
+    private byte term, year;
     private double units, grades;
     private boolean isElective;
 
