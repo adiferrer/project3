@@ -90,7 +90,7 @@ public class CourseAdministration {
     private static void saveChangesToFile(ArrayList<Course> courseList) {
         String decision;
         String line;
-        System.out.println("The changes will be permanent. Are you sure? Y/N");
+        System.out.print("The changes will be permanent. Are you sure? Y/N");
         decision = keyboard.nextLine();
         if (decision.equals("Y") || decision.equals("y")) {
             try {
@@ -661,6 +661,20 @@ public class CourseAdministration {
                 termBuffer();
             }
         }
+
+        System.out.println();
+        System.out.print("Press enter key to see grades in ascending order...");
+        keyboard.nextLine();
+        System.out.println();
+
+        sortCoursesByGPA(courseList, 1);
+
+        System.out.println();
+        System.out.print("Press enter key to see grades in descending order...");
+        keyboard.nextLine();
+        System.out.println();
+
+        sortCoursesByGPA(courseList, 2);
     }
 
     /**
@@ -673,9 +687,8 @@ public class CourseAdministration {
      *
      * @param courseList the ArrayList of courses from the BSCSCurriculumData1WithGrades.csv file
      * @param aOrD       the choice indicating if the ArrayList should be sorted in descending or ascending order
-     * @return an ArrayList of sorted courses with GPA
      */
-    private static ArrayList<Course> sortCoursesByGPA(ArrayList<Course> courseList, int aOrD) {
+    private static void sortCoursesByGPA(ArrayList<Course> courseList, int aOrD) {
         ArrayList<Course> courseListCopy = new ArrayList<Course>();
         for (Course c : courseList) {
             if (c.getGrades() != 0)
@@ -683,13 +696,24 @@ public class CourseAdministration {
         }
 
         switch (aOrD) {
-            case 1 -> Collections.sort(courseListCopy); // Ascending Order
+            case 1 -> { // Ascending Order
+                Collections.sort(courseListCopy);
+                System.out.print("\t\t\t\t\t\t\t\t\t\t\t\t\t\t   ASCENDING ORDER");
+                System.out.printf("\n%-15s %-110s %-8s %-6s\n", "COURSE NO.", "COURSE DESCRIPTION", "UNITS", "GRADE");
+                for (int i = 0; i < 145; i++) System.out.print("-");
+                System.out.println();
+                for (Course c : courseListCopy) System.out.println(c);
+            }
             case 2 -> { // Descending Order
                 Collections.sort(courseListCopy);
                 Collections.reverse(courseListCopy);
+                System.out.print("\t\t\t\t\t\t\t\t\t\t\t\t\t\t   DESCENDING ORDER");
+                System.out.printf("\n%-15s %-110s %-8s %-6s\n", "COURSE NO.", "COURSE DESCRIPTION", "UNITS", "GRADE");
+                for (int i = 0; i < 145; i++) System.out.print("-");
+                System.out.println();
+                for (Course c : courseListCopy) System.out.println(c);
             }
         }
-        return courseListCopy;
     }
 
     /**
@@ -932,13 +956,62 @@ public class CourseAdministration {
         System.out.println();
     }
 
-    // TODO ADI AND KURT
-
     /**
      * Displays the contributions of each member when invoked through the main menu
      */
     private static void aboutTheDevelopers() {
-
+        System.out.println("""
+                =================================================
+                Bustarde, Jerome
+                1. hasFailedCourse()
+                2. main()
+                3. showCourses()
+                4. Assisted with Javadoc comments
+                                
+                Castro, Enrico Nathanielle
+                1. inputGrades()
+                2. showCourses()
+                3. displayHeader()
+                4. showMenu()
+                                
+                Dela Cruz, Jonah Andre
+                1. showMenu()
+                2. shiftCourse(), shifter csv file and associated methods
+                                
+                Ferrer, Jeanne Adeline
+                1. showFailedCourses()
+                2. editCourse()
+                3. sortCoursesByGPA()
+                4. showCoursesWithGrades
+                5. Edited the javadoc comments
+                6. toString() and compareTo() methods in the Course class
+                7. displayHeaderWithGrades()
+                8. Edited the parseCSV method, added the buildArray method so that 
+                   parseCSV won't throw an ArrayIndexOutOfBounds exception 
+                   when the grade cell in a csv file is null
+                9. termBuffer() and inputBuffer()
+                                
+                Nudo, Kurt Matthew
+                1. Created the actual code logic design
+                2. parseCSV()
+                3. Reference class Course
+                4. Fixed the displayHeader() methods
+                5. manageElectiveCourses() and associated methods
+                6. searchCourseList()
+                7. inputGrades()
+                8. Rewrote the acceptInput() methods, made them handle exceptions locally
+                9. Modified methods that accept input from the keyboard to use the
+                   acceptInput() methods
+                                
+                Ocampo, Jomari
+                ????
+                                
+                Pangwi, Eugene Justin
+                1. parseCSV()
+                2. saveChangesToFile()
+                3. Assisted with Javadoc comments 
+                 
+                """);
     }
 
     /**
