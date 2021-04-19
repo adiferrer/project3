@@ -111,7 +111,7 @@ public class CourseAdministration {
 
                 outputWriter.close();
 
-                PrintWriter outputWriter2 = new PrintWriter(new FileWriter("BSCSCurriculumData1WithGradesTabularCopy.csv"));
+                PrintWriter outputWriter2 = new PrintWriter(new FileWriter("BSCSCurriculumData1WithGradesTabularCopy.txt"));
                 for (int i = 0; i < courseList.size(); i++) outputWriter2.println(courseList.get(i));
                 outputWriter2.close();
             } catch (IOException ioException) {
