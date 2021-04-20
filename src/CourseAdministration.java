@@ -5,7 +5,7 @@ import java.util.Collections;
 import java.util.Scanner;
 
 public class CourseAdministration {
-    static BufferedReader br;
+    private static BufferedReader br;
     private static final Scanner keyboard = new Scanner(System.in);
     private static final int INT_SENTINEL_VALUE = Integer.MIN_VALUE;
     private static final byte BYTE_SENTINEL_VALUE = Byte.MIN_VALUE;
@@ -468,47 +468,7 @@ public class CourseAdministration {
         for (int i = 0; i < 145; i++) System.out.print("-");
         System.out.printf("\n%-15s %-110s %-8s %-6s\n", "COURSE NO.", "COURSE DESCRIPTION", "UNITS", "GRADE");
         for (Course c : courseListCopyFail) System.out.println(c);
-    }
-
-    /**
-     * This method essentially functions in the same way as the parseCSV method, but this
-     * method opens a different CSV file which contains the shifter's data to be used in the
-     * shifter methods.
-     * <p>
-     * METHOD ALGORITHM: <br>
-     * 1. Create a new ArrayList <br>
-     * 2. Open the shifterData CSV file with FileReader <br>
-     * 3. Splits each value separated by commas <br>
-     * 4. Processes each value to be in line with the Course constructor <br>
-     * 5. Adds said course to the ArrayList
-     *
-     * @return an ArrayList of Courses from another curriculum
-     */
-    protected static ArrayList<Course> parseShifterCSV() {
-        ArrayList<Course> shifterCourseList = new ArrayList<>();
-        String l;
-
-        try {
-            br = new BufferedReader(new FileReader("ShifterData.csv"));
-            br.readLine();
-            while ((l = br.readLine()) != null) {
-                String[] cSV = l.split(",");
-                if (cSV.length < 6) cSV = buildArray(l.split(","));
-                Course cTemp = new Course();
-                cTemp.setYear(Byte.parseByte(cSV[0]));
-                cTemp.setTerm(Byte.parseByte(cSV[1]));
-                cTemp.setCourseNumber(cSV[2]);
-                cTemp.setDescriptiveTitle(cSV[3]);
-                cTemp.setUnits(Double.parseDouble(cSV[4]));
-                if (cSV[5].equals("")) cTemp.setGrades(0);
-                else cTemp.setGrades(Double.parseDouble(cSV[5]));
-                shifterCourseList.add(cTemp);
-            }
-        } catch (FileNotFoundException e) {
-        } catch (IOException e) {
-        }
-
-        return shifterCourseList;
+        System.out.println();
     }
 
     /**
@@ -529,35 +489,33 @@ public class CourseAdministration {
     private static void shiftCourse(ArrayList<Course> courseList) {
         ArrayList<Course> shifterCourseList = parseCSV("ShifterData.csv");
         char shiftChoice;
-
+        System.out.println("Detected Shifter CSV: BSIT 1");
+        System.out.println("Shifting to: BSCS 1");
         System.out.print("Are you sure you want to shift courses?(y/n): ");
         shiftChoice = keyboard.next().charAt(0);
 
         if (shiftChoice != 'y' && shiftChoice != 'Y') {
             System.out.println();
-            showMenu();
-            return;
-        }
-
-        for (Course sC : shifterCourseList) {
-            for (Course c : courseList) {
-                if ((sC.getDescriptiveTitle()).compareToIgnoreCase(c.getDescriptiveTitle()) == 0) {
-                    c.setGrades(sC.getGrades());
-                    c.setCourseNumber(sC.getCourseNumber());
-                    break;
+        } else {
+            for (Course sC : shifterCourseList) {
+                for (Course c : courseList) {
+                    if ((sC.getDescriptiveTitle()).compareToIgnoreCase(c.getDescriptiveTitle()) == 0) {
+                        c.setGrades(sC.getGrades());
+                        c.setCourseNumber(sC.getCourseNumber());
+                        break;
+                    }
                 }
             }
+            System.out.println();
+            System.out.print("YOUR COURSES");
+            showShifterCourses(shifterCourseList);
+
+            uncarriedCourses(courseList, shifterCourseList);
+
+            System.out.println();
+            System.out.print("You have successfully shifted courses!");
+            System.out.println();
         }
-
-        System.out.println();
-        System.out.print("YOUR COURSES");
-        showShifterCourses(shifterCourseList);
-
-        uncarriedCourses(courseList, shifterCourseList);
-
-        System.out.println();
-        System.out.print("You have successfully shifted courses!");
-        System.out.println();
     }
 
     /**
@@ -807,12 +765,16 @@ public class CourseAdministration {
         String searchKey;
         do {
             showCoursesWithoutGPA(courseList);
-            searchKey = acceptStringInput("Enter a course number: ");
+            searchKey = acceptStringInput("\nEnter a course number: ");
             selectedCourse = searchCourseList(courseList, searchKey);
-            if (selectedCourse.getCourseNumber().equals(""))
+            if (selectedCourse.getCourseNumber().equals("")) {
                 System.out.println("Invalid Course Number inputted. Try again.");
+                System.out.print("Press enter to continue.");
+                keyboard.nextLine();
+            }
         } while (selectedCourse.getCourseNumber().equals(""));
         selectedCourse.setGrades(acceptDoubleInput("Input GPA: "));
+
     }
 
     /**
@@ -950,7 +912,6 @@ public class CourseAdministration {
      * Serves as buffer in between operations.
      */
     private static void inputBuffer() {
-        System.out.println();
         System.out.print("Press enter key to choose another item.");
         keyboard.nextLine();
         System.out.println();
@@ -1009,8 +970,8 @@ public class CourseAdministration {
                 Pangwi, Eugene Justin
                 1. parseCSV()
                 2. saveChangesToFile()
-                3. Assisted with Javadoc comments 
-                 
+                3. Assisted with Javadoc comments
+                =================================================
                 """);
     }
 
