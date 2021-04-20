@@ -687,12 +687,13 @@ public class CourseAdministration {
      */
     private static void manageElectiveCourses(ArrayList<Course> courseList) {
         int choice;
-        System.out.println("\t\t\t\t\t\t\t\t\t\t\t\t\t\t   ELECTIVE COURSES");
-        for (int i = 0; i < 145; i++) System.out.print("-");
-        System.out.printf("\n%-15s %-110s %-8s %-6s\n", "COURSE NO.", "COURSE DESCRIPTION", "UNITS", "GRADE");
-        for (Course c : courseList)
-            if (c.getIsElective())
-                System.out.println(c);
+        do {
+            System.out.println("\t\t\t\t\t\t\t\t\t\t\t\t\t\t   ELECTIVE COURSES");
+            for (int i = 0; i < 145; i++) System.out.print("-");
+            System.out.printf("\n%-15s %-110s %-8s %-6s\n", "COURSE NO.", "COURSE DESCRIPTION", "UNITS", "GRADE");
+            for (Course c : courseList)
+                if (c.getIsElective())
+                    System.out.println(c);
 
             System.out.println("\nWhat would you like to do?\n");
             System.out.println("1. Manage an elective course.");
@@ -703,11 +704,11 @@ public class CourseAdministration {
             switch (choice) {
                 case 1:
                     editCourse(courseList);
-                    inputBuffer();
                     break;
                 case 2:
                     break;
             }
+        } while (choice != 2);
     }
 
     /**
