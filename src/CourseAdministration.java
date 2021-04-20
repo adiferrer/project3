@@ -687,14 +687,14 @@ public class CourseAdministration {
      */
     private static void manageElectiveCourses(ArrayList<Course> courseList) {
         int choice;
-
-        do { // validates the input
+        do {
             System.out.println("\t\t\t\t\t\t\t\t\t\t\t\t\t\t   ELECTIVE COURSES");
             for (int i = 0; i < 145; i++) System.out.print("-");
             System.out.printf("\n%-15s %-110s %-8s %-6s\n", "COURSE NO.", "COURSE DESCRIPTION", "UNITS", "GRADE");
             for (Course c : courseList)
                 if (c.getIsElective())
                     System.out.println(c);
+
             System.out.println("\nWhat would you like to do?\n");
             System.out.println("1. Manage an elective course.");
             System.out.println("2. Return to the main menu.\n");
@@ -707,10 +707,8 @@ public class CourseAdministration {
                     break;
                 case 2:
                     break;
-
             }
         } while (choice != 2);
-
     }
 
     /**
@@ -828,11 +826,11 @@ public class CourseAdministration {
      * @return the valid byte input to be used
      */
     private static byte acceptByteInput(String message) {
-        byte input = -1;
+        byte input = BYTE_SENTINEL_VALUE;
         while (true) {
             try {
                 input = Byte.parseByte(acceptStringInput(message));
-                if (input != -1) return input;
+                if (input != BYTE_SENTINEL_VALUE) return input;
             } catch (NumberFormatException exception) {
                 System.out.println("You have entered an invalid integer.");
             } catch (Exception exception) {
@@ -853,11 +851,11 @@ public class CourseAdministration {
      * @return an integer input.
      */
     private static int acceptIntegerInput(String message) {
-        int input = -1;
+        int input = INT_SENTINEL_VALUE;
         while (true) {
             try {
                 input = Integer.parseInt(acceptStringInput(message));
-                if (input != -1) return input;
+                if (input != INT_SENTINEL_VALUE) return input;
             } catch (NumberFormatException exception) {
                 System.out.println("You have entered an invalid integer.");
             } catch (Exception exception) {
@@ -879,11 +877,11 @@ public class CourseAdministration {
      * @return a double input
      */
     private static double acceptDoubleInput(String message) {
-        Double input = -1.0;
+        Double input = DOUBLE_SENTINEL_VALUE;
         while (true) {
             try {
                 input = Double.parseDouble(acceptStringInput(message));
-                if (input != -1.0) return input;
+                if (input != DOUBLE_SENTINEL_VALUE) return input;
             } catch (NumberFormatException exception) {
                 System.out.println("You have entered an invalid Double value.");
             } catch (Exception exception) {
