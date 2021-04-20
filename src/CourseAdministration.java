@@ -496,29 +496,26 @@ public class CourseAdministration {
 
         if (shiftChoice != 'y' && shiftChoice != 'Y') {
             System.out.println();
-            showMenu();
-            return;
-        }
-
-        for (Course sC : shifterCourseList) {
-            for (Course c : courseList) {
-                if ((sC.getDescriptiveTitle()).compareToIgnoreCase(c.getDescriptiveTitle()) == 0) {
-                    c.setGrades(sC.getGrades());
-                    c.setCourseNumber(sC.getCourseNumber());
-                    break;
+        } else {
+            for (Course sC : shifterCourseList) {
+                for (Course c : courseList) {
+                    if ((sC.getDescriptiveTitle()).compareToIgnoreCase(c.getDescriptiveTitle()) == 0) {
+                        c.setGrades(sC.getGrades());
+                        c.setCourseNumber(sC.getCourseNumber());
+                        break;
+                    }
                 }
             }
+            System.out.println();
+            System.out.print("YOUR COURSES");
+            showShifterCourses(shifterCourseList);
+
+            uncarriedCourses(courseList, shifterCourseList);
+
+            System.out.println();
+            System.out.print("You have successfully shifted courses!");
+            System.out.println();
         }
-
-        System.out.println();
-        System.out.print("YOUR COURSES");
-        showShifterCourses(shifterCourseList);
-
-        uncarriedCourses(courseList, shifterCourseList);
-
-        System.out.println();
-        System.out.print("You have successfully shifted courses!");
-        System.out.println();
     }
 
     /**
@@ -973,7 +970,9 @@ public class CourseAdministration {
                 Pangwi, Eugene Justin
                 1. parseCSV()
                 2. saveChangesToFile()
-                3. Assisted with Javadoc comments""");
+                3. Assisted with Javadoc comments
+                =================================================
+                """);
     }
 
     /**
