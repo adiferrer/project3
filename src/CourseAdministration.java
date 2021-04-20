@@ -468,6 +468,7 @@ public class CourseAdministration {
         for (int i = 0; i < 145; i++) System.out.print("-");
         System.out.printf("\n%-15s %-110s %-8s %-6s\n", "COURSE NO.", "COURSE DESCRIPTION", "UNITS", "GRADE");
         for (Course c : courseListCopyFail) System.out.println(c);
+        System.out.println();
     }
 
     /**
@@ -767,12 +768,16 @@ public class CourseAdministration {
         String searchKey;
         do {
             showCoursesWithoutGPA(courseList);
-            searchKey = acceptStringInput("Enter a course number: ");
+            searchKey = acceptStringInput("\nEnter a course number: ");
             selectedCourse = searchCourseList(courseList, searchKey);
-            if (selectedCourse.getCourseNumber().equals(""))
+            if (selectedCourse.getCourseNumber().equals("")) {
                 System.out.println("Invalid Course Number inputted. Try again.");
+                System.out.print("Press enter to continue.");
+                keyboard.nextLine();
+            }
         } while (selectedCourse.getCourseNumber().equals(""));
         selectedCourse.setGrades(acceptDoubleInput("Input GPA: "));
+
     }
 
     /**
@@ -910,7 +915,6 @@ public class CourseAdministration {
      * Serves as buffer in between operations.
      */
     private static void inputBuffer() {
-        System.out.println();
         System.out.print("Press enter key to choose another item.");
         keyboard.nextLine();
         System.out.println();
@@ -969,9 +973,7 @@ public class CourseAdministration {
                 Pangwi, Eugene Justin
                 1. parseCSV()
                 2. saveChangesToFile()
-                3. Assisted with Javadoc comments 
-                 
-                """);
+                3. Assisted with Javadoc comments""");
     }
 
     /**
